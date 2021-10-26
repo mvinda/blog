@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-20T13:26:35.264Z</updated>
+  <updated>2021-10-26T05:20:04.577Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>读书笔记--编写可读代码的艺术</title>
+    <link href="http://example.com/2021/01/30/%E7%BC%96%E5%86%99%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E8%89%BA%E6%9C%AF/"/>
+    <id>http://example.com/2021/01/30/%E7%BC%96%E5%86%99%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E8%89%BA%E6%9C%AF/</id>
+    <published>2021-01-29T16:00:00.000Z</published>
+    <updated>2021-10-26T05:20:04.577Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="读完这本书主要是回答几个问题"><a href="#读完这本书主要是回答几个问题" class="headerlink" title="读完这本书主要是回答几个问题"></a>读完这本书主要是回答几个问题</h1><h2 id="什么是好的代码？"><a href="#什么是好的代码？" class="headerlink" title="什么是好的代码？"></a>什么是好的代码？</h2><p>好的代码就是可读性好，可读性好就是代码应当使别人理解它所需要的时间最少。</p><h2 id="什么样的命名是好的命名呢？"><a href="#什么样的命名是好的命名呢？" class="headerlink" title="什么样的命名是好的命名呢？"></a>什么样的命名是好的命名呢？</h2><p>要把信息塞进名字中，读者通过名字就可以获得很多的信息。<br>使用专业的单词，不用get  用download  fetch 等更好。<br>不要用空泛的词，比如tmp。<br>用具体的名字来更细致描述事物。<br>给变量名带上重要的细节。<br>为作用域大的名字用更长的名字。<br>有目的地使用大小写和下划线等</p><p>不会误解的名字是最好的名字，阅读的人应该能准确的理解你的意思，命名前多想一下 其他人是否有其他的理解。<br>用布尔值的时候，用is 和 has这样的词来表达。<br>小心用户对特定词的期待 他们会觉得 get 或者 size是轻量的方法。</p><h2 id="大家觉得什么样的代码是漂亮的代码"><a href="#大家觉得什么样的代码是漂亮的代码" class="headerlink" title="大家觉得什么样的代码是漂亮的代码?"></a>大家觉得什么样的代码是漂亮的代码?</h2><p>大家都愿意读有美感的代码，通过把代码用一致的，有意义的格式化 可以把代码变得更容易读，且可以读得很快。</p><h2 id="什么样的注释需要写-怎么写"><a href="#什么样的注释需要写-怎么写" class="headerlink" title="什么样的注释需要写,怎么写"></a>什么样的注释需要写,怎么写</h2><p>并不是所有地方都要写注释，能从代码本身快速判断的不要写注释。<br>想要来粉饰命名不好的注释不要写，直接改方法名或者类名。<br>你可以写代码为什么这么写的注释而不是正常的写法，一些背后的故事。</p><h2 id="如何让你的代码更容易阅读？"><a href="#如何让你的代码更容易阅读？" class="headerlink" title="如何让你的代码更容易阅读？"></a>如何让你的代码更容易阅读？</h2><p>在写比较的时候，把改变的变量写在左边，常量或者稳定的值写在右边。<br>尽量减少中间变量，可以立即处理中间结果 。<br>小心变量的作用域，作用域越小越好。<br>只写一次的变量就更好了，这些变量只设置一次就不再设置了。</p><h2 id="如何写代码问题少？"><a href="#如何写代码问题少？" class="headerlink" title="如何写代码问题少？"></a>如何写代码问题少？</h2><p>把一般的代码和项目的专有代码分开，这样大部分的代码都是一般代码 也就是库里封装好的代码，通过建立一大组库和辅助函数解决一般问题，剩下的只剩让你的程序与众不同的部分。<br> 一个简单的技巧就是一次只做一件事，如果你有很难读的代码试着把这个代码的所有任务都列出来，把这些任务封成方法，其他的简单成为函数中的逻辑段落。</p><h2 id="为什么说代码越少越好？"><a href="#为什么说代码越少越好？" class="headerlink" title="为什么说代码越少越好？"></a>为什么说代码越少越好？</h2><p>代码越少越好，因为每一行都需要测试和维护。<br>你可以在项目中消除不要的功能，也不要过度的设计。<br>重新考虑需求，解决版本最简单的问题，只要能完成工作就好。<br>有单元测试十分重要，，而且测试的可读性也很重要。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;读完这本书主要是回答几个问题&quot;&gt;&lt;a href=&quot;#读完这本书主要是回答几个问题&quot; class=&quot;headerlink&quot; title=&quot;读完这本书主要是回答几个问题&quot;&gt;&lt;/a&gt;读完这本书主要是回答几个问题&lt;/h1&gt;&lt;h2 id=&quot;什么是好的代码？&quot;&gt;&lt;a href</summary>
+      
+    
+    
+    
+    <category term="日常积累" scheme="http://example.com/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/"/>
+    
+    
+    <category term="读书笔记" scheme="http://example.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式之单例模式</title>
