@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-26T05:20:04.577Z</updated>
+  <updated>2021-10-28T07:17:06.314Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式-适配器模式</title>
+    <link href="http://example.com/2021/01/31/%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://example.com/2021/01/31/%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</id>
+    <published>2021-01-30T16:00:00.000Z</published>
+    <updated>2021-10-28T07:17:06.314Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>适配器模式把一个类的接口变换成客户端所期待的另外一种接口，从而使原本不匹配的接口能在一起工作</p><h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>（1）系统需要使用一个现有的类，而此类的接口不符合系统的需要，就是接口不兼容<br>（2）想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的类，包括一些可能在将来引进的类一起工作<br>（3）需要一个统一的输出接口，而输出端类型不可预知</p><h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/medias/paper/build.png" alt="建造者模式类图"></p><p>我们可以看到<br>Target 目标角色 也就是所期待得到的接口<br>Adaptee 现在需要适配的接口<br>Adapter 适配器角色 也是核心类把源接口转成目标接口 这里不能是接口 而必须是特定的类</p><h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>原来要适配的接口</p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Volt220</span>  <span class="token punctuation">&#123;</span>    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt220</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>        <span class="token keyword">return</span> <span class="token number">220</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>定义要适配的接口</p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FiveVolt</span> <span class="token punctuation">&#123;</span>    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>适配的核心接口</p><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VoltAdapter</span> <span class="token keyword">extends</span> <span class="token class-name">Volt220</span> <span class="token keyword">implements</span> <span class="token class-name">FiveVolt</span> <span class="token punctuation">&#123;</span>    <span class="token annotation punctuation">@Override</span>    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>    <span class="token keyword">public</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token class-name">VoltAdapter</span> voltAdapter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VoltAdapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        voltAdapter<span class="token punctuation">.</span><span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>Android其他使用<br>在Android上适配器也被用来适配多种数据来源 我们将view的组装交给用户 ListView只需要拿到适配器就可以显示ui，隔离变化 拥抱变化</p><h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>1.更好的复用性<br>系统需要使用现有的类 而此类的接口不符合系统的需要，那么通过适配器可以让这些功能得到更好的复用<br>2. 更好扩展性<br>实现适配器的功能时候，可以调用自己开发的功能，从而自然地扩展系统的功能</p><p>缺点<br>过多使用适配器会让系统非常凌乱，不容易整体把控。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;定义&quot;&gt;&lt;a href=&quot;#定义&quot; class=&quot;headerlink&quot; title=&quot;定义&quot;&gt;&lt;/a&gt;定义&lt;/h1&gt;&lt;p&gt;适配器模式把一个类的接口变换成客户端所期待的另外一种接口，从而使原本不匹配的接口能在一起工作&lt;/p&gt;
+&lt;h2 id=&quot;使用场景&quot;&gt;&lt;a hr</summary>
+      
+    
+    
+    
+    <category term="设计模式" scheme="http://example.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+    <category term="设计模式" scheme="http://example.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>读书笔记--编写可读代码的艺术</title>

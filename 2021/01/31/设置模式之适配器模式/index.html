@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="读书笔记--编写可读代码的艺术, Vinda">
+    <meta name="keywords" content="设计模式-适配器模式, Vinda">
     <meta name="description" content="人生若如初见">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>读书笔记--编写可读代码的艺术 | Vinda</title>
+    <title>设计模式-适配器模式 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">读书笔记--编写可读代码的艺术</h1>
+                    <h1 class="description center-align post-title">设计模式-适配器模式</h1>
                 </div>
             </div>
         </div>
@@ -410,8 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-                                <span class="chip bg-color">读书笔记</span>
+                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">设计模式</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
-                                日常积累
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                设计模式
                             </a>
                         
                     </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-30
+                    2021-01-31
                 </div>
                 
 
@@ -459,14 +459,49 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="读完这本书主要是回答几个问题"><a href="#读完这本书主要是回答几个问题" class="headerlink" title="读完这本书主要是回答几个问题"></a>读完这本书主要是回答几个问题</h1><h2 id="什么是好的代码？"><a href="#什么是好的代码？" class="headerlink" title="什么是好的代码？"></a>什么是好的代码？</h2><p>好的代码就是可读性好，可读性好就是代码应当使别人理解它所需要的时间最少。</p>
-<h2 id="什么样的命名是好的命名呢？"><a href="#什么样的命名是好的命名呢？" class="headerlink" title="什么样的命名是好的命名呢？"></a>什么样的命名是好的命名呢？</h2><p>要把信息塞进名字中，读者通过名字就可以获得很多的信息。<br>使用专业的单词，不用get  用download  fetch 等更好。<br>不要用空泛的词，比如tmp。<br>用具体的名字来更细致描述事物。<br>给变量名带上重要的细节。<br>为作用域大的名字用更长的名字。<br>有目的地使用大小写和下划线等</p>
-<p>不会误解的名字是最好的名字，阅读的人应该能准确的理解你的意思，命名前多想一下 其他人是否有其他的理解。<br>用布尔值的时候，用is 和 has这样的词来表达。<br>小心用户对特定词的期待 他们会觉得 get 或者 size是轻量的方法。</p>
-<h2 id="大家觉得什么样的代码是漂亮的代码"><a href="#大家觉得什么样的代码是漂亮的代码" class="headerlink" title="大家觉得什么样的代码是漂亮的代码?"></a>大家觉得什么样的代码是漂亮的代码?</h2><p>大家都愿意读有美感的代码，通过把代码用一致的，有意义的格式化 可以把代码变得更容易读，且可以读得很快。</p>
-<h2 id="什么样的注释需要写-怎么写"><a href="#什么样的注释需要写-怎么写" class="headerlink" title="什么样的注释需要写,怎么写"></a>什么样的注释需要写,怎么写</h2><p>并不是所有地方都要写注释，能从代码本身快速判断的不要写注释。<br>想要来粉饰命名不好的注释不要写，直接改方法名或者类名。<br>你可以写代码为什么这么写的注释而不是正常的写法，一些背后的故事。</p>
-<h2 id="如何让你的代码更容易阅读？"><a href="#如何让你的代码更容易阅读？" class="headerlink" title="如何让你的代码更容易阅读？"></a>如何让你的代码更容易阅读？</h2><p>在写比较的时候，把改变的变量写在左边，常量或者稳定的值写在右边。<br>尽量减少中间变量，可以立即处理中间结果 。<br>小心变量的作用域，作用域越小越好。<br>只写一次的变量就更好了，这些变量只设置一次就不再设置了。</p>
-<h2 id="如何写代码问题少？"><a href="#如何写代码问题少？" class="headerlink" title="如何写代码问题少？"></a>如何写代码问题少？</h2><p>把一般的代码和项目的专有代码分开，这样大部分的代码都是一般代码 也就是库里封装好的代码，通过建立一大组库和辅助函数解决一般问题，剩下的只剩让你的程序与众不同的部分。<br> 一个简单的技巧就是一次只做一件事，如果你有很难读的代码试着把这个代码的所有任务都列出来，把这些任务封成方法，其他的简单成为函数中的逻辑段落。</p>
-<h2 id="为什么说代码越少越好？"><a href="#为什么说代码越少越好？" class="headerlink" title="为什么说代码越少越好？"></a>为什么说代码越少越好？</h2><p>代码越少越好，因为每一行都需要测试和维护。<br>你可以在项目中消除不要的功能，也不要过度的设计。<br>重新考虑需求，解决版本最简单的问题，只要能完成工作就好。<br>有单元测试十分重要，，而且测试的可读性也很重要。</p>
+                <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>适配器模式把一个类的接口变换成客户端所期待的另外一种接口，从而使原本不匹配的接口能在一起工作</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>（1）系统需要使用一个现有的类，而此类的接口不符合系统的需要，就是接口不兼容<br>（2）想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的类，包括一些可能在将来引进的类一起工作<br>（3）需要一个统一的输出接口，而输出端类型不可预知</p>
+<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/medias/paper/build.png" alt="建造者模式类图"></p>
+<p>我们可以看到<br>Target 目标角色 也就是所期待得到的接口<br>Adaptee 现在需要适配的接口<br>Adapter 适配器角色 也是核心类把源接口转成目标接口 这里不能是接口 而必须是特定的类</p>
+<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>原来要适配的接口</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Volt220</span>  <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt220</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+
+        <span class="token keyword">return</span> <span class="token number">220</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>定义要适配的接口</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FiveVolt</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>适配的核心接口</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VoltAdapter</span> <span class="token keyword">extends</span> <span class="token class-name">Volt220</span> <span class="token keyword">implements</span> <span class="token class-name">FiveVolt</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">VoltAdapter</span> voltAdapter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VoltAdapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        voltAdapter<span class="token punctuation">.</span><span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Android其他使用<br>在Android上适配器也被用来适配多种数据来源 我们将view的组装交给用户 ListView只需要拿到适配器就可以显示ui，隔离变化 拥抱变化</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>1.更好的复用性<br>系统需要使用现有的类 而此类的接口不符合系统的需要，那么通过适配器可以让这些功能得到更好的复用<br>2. 更好扩展性<br>实现适配器的功能时候，可以调用自己开发的功能，从而自然地扩展系统的功能</p>
+<p>缺点<br>过多使用适配器会让系统非常凌乱，不容易整体把控。</p>
 
                 
             </div>
@@ -481,8 +516,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-                                    <span class="chip bg-color">读书笔记</span>
+                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">设计模式</span>
                                 </a>
                             
                         </div>
@@ -651,9 +686,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/01/31/%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
@@ -671,9 +707,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-31
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -686,6 +722,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -704,13 +741,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/01/30/%E7%BC%96%E5%86%99%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E8%89%BA%E6%9C%AF/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="设计模式之单例模式">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="读书笔记--编写可读代码的艺术">
                         
-                        <span class="card-title">设计模式之单例模式</span>
+                        <span class="card-title">读书笔记--编写可读代码的艺术</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -721,14 +758,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" class="post-category">
-                                    代码设计
+                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
+                                    日常积累
                                 </a>
                             
                             
@@ -738,8 +775,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+                        <span class="chip bg-color">读书笔记</span>
                     </a>
                     
                 </div>
