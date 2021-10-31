@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式-观察者模式, Vinda">
+    <meta name="keywords" content="设计模式-策略模式模式, Vinda">
     <meta name="description" content="人生若如初见">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式-观察者模式 | Vinda</title>
+    <title>设计模式-策略模式模式 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式-观察者模式</h1>
+                    <h1 class="description center-align post-title">设计模式-策略模式模式</h1>
                 </div>
             </div>
         </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-06
+                    2021-02-08
                 </div>
                 
 
@@ -459,98 +459,70 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>定义对象间一种一对多的依赖关系，使得每当一个对象改变状态，所有依赖与他的状态都会被通知到。</p>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>Subject 抽象的主题，也就是被观察者的角色，抽象主题角色把所有观察者对象的引用存在一个集合中，每个主题都可以有任意数量的观察者，抽象主题提供接口，可以增加删除观察者对象。</p>
-<p>ConcreteSubject 具体，该角色将有关状态存在具体观察者对象，具体内部发生变化的时候，给所有注册过的通知者发出通知，具体主题角色又叫做具体被观察者</p>
-<p>Observer 抽象观察者，该角色是观察者的抽象类，它定义了一个更新接口，使得在得到主题的更改通知的时候更新自己</p>
-<p>ConCreteObserver 具体的观察者，该角色实现抽象观察者实现的接口，以便在主题变化的时候更新自身状态</p>
-<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/observer.png" alt="观察者模式类图"></p>
-<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>最简单的例子</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Coder</span> <span class="token keyword">implements</span> <span class="token class-name">Observer</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>策略模式是一个比较实用的设计模式，在开发的时候经常遇到一种情况就是实现一个功能有多种方式，，我们可以根据不同的情况去选择不同的策略完成这个功能，当前你可以写在一个类中，加入大量的if else去判断，但是这就属于硬编码了，每次改动都会修改，不符合开闭原则，因此我们需要使用策略模式去根据不同的场景有不同的实现方案</p>
+<h2 id="二、-责任链模式的使用场景"><a href="#二、-责任链模式的使用场景" class="headerlink" title="二、 责任链模式的使用场景"></a>二、 责任链模式的使用场景</h2><p>1.针对一类问题，有多种处理方式，但是仅仅具体行为有差异的时候<br>2.出现一类抽象类有多个子类，需要if else来选择某个子类</p>
+<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/stragety.png" alt="类图"></p>
+<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>leak<span class="token punctuation">.</span></span><span class="token class-name">Stragety</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">public</span>  <span class="token class-name">Coder</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token operator">=</span>name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+<span class="token keyword">interface</span>  <span class="token class-name">CalculateStragety</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">price</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BusCalculateStragety</span> <span class="token keyword">implements</span> <span class="token class-name">CalculateStragety</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token class-name">Observable</span> o<span class="token punctuation">,</span> <span class="token class-name">Object</span> arg<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"收到通知"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">price</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//开始大巴的算费标准 比如上车两块去哪里都一样</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DevTechFrontier</span> <span class="token keyword">extends</span> <span class="token class-name">Observable</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postNewTouchPublication</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">setChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">notifyObservers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TaxiCalculateStragety</span> <span class="token keyword">implements</span> <span class="token class-name">CalculateStragety</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">price</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//开始计程车的收费标准 按公里数计算</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">class</span> <span class="token class-name">ExampleUnitTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Test</span>
-    fun <span class="token function">addition_isCorrect</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        val devTechFrontier <span class="token operator">=</span> <span class="token class-name">DevTechFrontier</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Calcutate</span> <span class="token punctuation">&#123;</span>
 
-        val coder <span class="token operator">=</span> <span class="token class-name">Coder</span><span class="token punctuation">(</span><span class="token string">"coder1"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token class-name">CalculateStragety</span> mCalculateStragety<span class="token punctuation">;</span>
 
-        devTechFrontier<span class="token punctuation">.</span><span class="token function">addObserver</span><span class="token punctuation">(</span>coder<span class="token punctuation">)</span>
 
-        devTechFrontier<span class="token punctuation">.</span><span class="token function">postNewTouchPublication</span><span class="token punctuation">(</span><span class="token string">"新的技术周刊发布"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setCalculateStragety</span><span class="token punctuation">(</span><span class="token class-name">CalculateStragety</span> calculateStragety<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        mCalculateStragety<span class="token operator">=</span>calculateStragety<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>常用的例子<br>因为Observable和Observer 是内嵌入JDK中的所以可以直接可以用到，后续一般情况下可以比如Observer 这个接口放在 Observable的一个map或者list之中，在需要通知的时候遍历这个集合回调即可，当然 需要给出的是一个注册和取消注册的方法。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">interface</span> <span class="token class-name">WeatherObserver</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">void</span> <span class="token function">notifyWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeiJingWeather</span> <span class="token keyword">implements</span> <span class="token class-name">WeatherObserver</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">notifyWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"notifyWeather:这里是北京，收到通知 "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">calculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        mCalculateStragety<span class="token punctuation">.</span><span class="token function">price</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
+
 <span class="token punctuation">&#125;</span>
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">public class GuangDongWeather implements WeatherObserver &#123;
-    @Override
-    public void notifyWeather() &#123;
-        System.out.println(&quot;notifyWeather:这里是广东，收到通知 &quot;);
 
-    &#125;
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">startCalculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">TaxiCalculateStragety</span> taxiCalculateStragety <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TaxiCalculateStragety</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//        BusCalculateStragety busCalculateStragety = new BusCalculateStragety();</span>
 
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>leak<span class="token punctuation">.</span>observer</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeatherObservable</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">WeatherObserver</span><span class="token punctuation">></span></span> list<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">resiter</span><span class="token punctuation">(</span><span class="token class-name">WeatherObserver</span> observer<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Calcutate</span> calcutate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Calcutate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        calcutate<span class="token punctuation">.</span><span class="token function">setCalculateStragety</span><span class="token punctuation">(</span>taxiCalculateStragety<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        calcutate<span class="token punctuation">.</span><span class="token function">calculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">unresiter</span><span class="token punctuation">(</span><span class="token class-name">WeatherObserver</span> observer<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        list<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">notifyAllWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span>list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">notifyWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-<p>这种自己实现的观察者模式才是比较常见能解耦两个模块</p>
-<p>优缺点<br>1.观察者模式和被观察者之间是抽象耦合，应对业务变化<br>2.增强系统灵活性，可扩展性</p>
-<p>缺点<br>在应用观察者模式时，需要考虑一下开发效率和运行效率问题</p>
+<p>我们以交通费计算为例子，不同的交通方式可能收费不一样 ，如果策略模式就可以定一个抽象接口，子类有不同的实现，再定义一个计算的类，可以通过外边不同的传参数进行不同的计算策略</p>
+<p>四、优缺点<br>1.优势<br>多重条件语句不易维护，而使用策略模式可以避免使用多重条件语句。<br>策略模式提供了一系列的可供重用的算法族，恰当使用继承可以把算法族的公共代码转移到父类里面，从而避免重复的代码。<br>策略模式可以提供相同行为的不同实现，客户可以根据不同时间或空间要求选择不同的。<br>策略模式提供了对开闭原则的完美支持，可以在不修改原代码的情况下，灵活增加新算法。<br>策略模式把算法的使用放到环境类中，而算法的实现移到具体策略类中，实现了二者的分离</p>
+<p>缺点<br>客户端必须理解所有策略算法的区别，以便适时选择恰当的算法类<br>策略模式造成很多的策略类</p>
+<p>六 状态模式与策略模式的差异<br>状态模式结构上跟策略模式非常接近 写法基本相同<br>但是状态模式更像是要去根据某种状态去做不同的事情 比如根据不同的状态去做是否可以转发数据，还是跳转到登录页面，因为要记录不同的状态所以很可能是单例，因为传入数据的地方可能不止一处地方。<br>策略模式更像是根据不同的情况去做一样的事情比如根据不同的车计算路费。</p>
 
                 
             </div>
@@ -735,17 +707,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/02/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="设计模式-责任链模式">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="设计模式-策略模式模式">
                         
-                        <span class="card-title">设计模式-责任链模式</span>
+                        <span class="card-title">设计模式-策略模式模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -755,9 +728,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -770,6 +743,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -788,13 +762,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/04/%E8%AE%BE%E8%AE%A1%E5%BD%95%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="设计模式-备忘录模式">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="设计模式-责任链模式">
                         
-                        <span class="card-title">设计模式-备忘录模式</span>
+                        <span class="card-title">设计模式-责任链模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -805,7 +779,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
                             </span>
                         <span class="publish-author">
                             

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式-观察者模式, Vinda">
+    <meta name="keywords" content="设计模式-责任链模式, Vinda">
     <meta name="description" content="人生若如初见">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式-观察者模式 | Vinda</title>
+    <title>设计模式-责任链模式 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式-观察者模式</h1>
+                    <h1 class="description center-align post-title">设计模式-责任链模式</h1>
                 </div>
             </div>
         </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-06
+                    2021-02-08
                 </div>
                 
 
@@ -459,98 +459,70 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>定义对象间一种一对多的依赖关系，使得每当一个对象改变状态，所有依赖与他的状态都会被通知到。</p>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>Subject 抽象的主题，也就是被观察者的角色，抽象主题角色把所有观察者对象的引用存在一个集合中，每个主题都可以有任意数量的观察者，抽象主题提供接口，可以增加删除观察者对象。</p>
-<p>ConcreteSubject 具体，该角色将有关状态存在具体观察者对象，具体内部发生变化的时候，给所有注册过的通知者发出通知，具体主题角色又叫做具体被观察者</p>
-<p>Observer 抽象观察者，该角色是观察者的抽象类，它定义了一个更新接口，使得在得到主题的更改通知的时候更新自己</p>
-<p>ConCreteObserver 具体的观察者，该角色实现抽象观察者实现的接口，以便在主题变化的时候更新自身状态</p>
-<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/observer.png" alt="观察者模式类图"></p>
-<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>最简单的例子</p>
+                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>使多个对象都有机会处理请求，从而避免了请求的发送者和接收者之间的耦合关系</p>
+<h2 id="二、-责任链模式的使用场景"><a href="#二、-责任链模式的使用场景" class="headerlink" title="二、 责任链模式的使用场景"></a>二、 责任链模式的使用场景</h2><p>多个对象可以请求同一请求，但具体由哪个对象处理则在运行时候动态决定<br>在请求处理者不明确的情况下向多个对象中的一个提交一个请求<br>需要动态指定一组对象处理请求</p>
+<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/zerenlian.png" alt="类图"></p>
+<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>定一个抽象的处理类 关键在与持有一个内部的自己引用</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Coder</span> <span class="token keyword">implements</span> <span class="token class-name">Observer</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+<span class="token keyword">public</span>  <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Handler</span> <span class="token punctuation">&#123;</span>
 
-    <span class="token keyword">public</span>  <span class="token class-name">Coder</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token operator">=</span>name<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token class-name">Observable</span> o<span class="token punctuation">,</span> <span class="token class-name">Object</span> arg<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"收到通知"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token class-name">Handler</span> soccessor<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">handleRequest</span><span class="token punctuation">(</span><span class="token class-name">String</span> condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DevTechFrontier</span> <span class="token keyword">extends</span> <span class="token class-name">Observable</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postNewTouchPublication</span><span class="token punctuation">(</span><span class="token class-name">String</span> content<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">setChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">notifyObservers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">class</span> <span class="token class-name">ExampleUnitTest</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Test</span>
-    fun <span class="token function">addition_isCorrect</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        val devTechFrontier <span class="token operator">=</span> <span class="token class-name">DevTechFrontier</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        val coder <span class="token operator">=</span> <span class="token class-name">Coder</span><span class="token punctuation">(</span><span class="token string">"coder1"</span><span class="token punctuation">)</span>
-
-        devTechFrontier<span class="token punctuation">.</span><span class="token function">addObserver</span><span class="token punctuation">(</span>coder<span class="token punctuation">)</span>
-
-        devTechFrontier<span class="token punctuation">.</span><span class="token function">postNewTouchPublication</span><span class="token punctuation">(</span><span class="token string">"新的技术周刊发布"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>常用的例子<br>因为Observable和Observer 是内嵌入JDK中的所以可以直接可以用到，后续一般情况下可以比如Observer 这个接口放在 Observable的一个map或者list之中，在需要通知的时候遍历这个集合回调即可，当然 需要给出的是一个注册和取消注册的方法。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">interface</span> <span class="token class-name">WeatherObserver</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">void</span> <span class="token function">notifyWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeiJingWeather</span> <span class="token keyword">implements</span> <span class="token class-name">WeatherObserver</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">notifyWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"notifyWeather:这里是北京，收到通知 "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">public class GuangDongWeather implements WeatherObserver &#123;
-    @Override
-    public void notifyWeather() &#123;
-        System.out.println(&quot;notifyWeather:这里是广东，收到通知 &quot;);
-
-    &#125;
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<p>我们定义两个链条 大概是根据逻辑判断是自己要处理还是交给其他人处理，如果自己处理就自己处理掉 如果别人处理是别人处理掉</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>leak<span class="token punctuation">.</span>observer</span><span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeatherObservable</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">WeatherObserver</span><span class="token punctuation">></span></span> list<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">resiter</span><span class="token punctuation">(</span><span class="token class-name">WeatherObserver</span> observer<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">unresiter</span><span class="token punctuation">(</span><span class="token class-name">WeatherObserver</span> observer<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        list<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">notifyAllWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span>list<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">notifyWeather</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcreteHandler1</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleRequest</span><span class="token punctuation">(</span><span class="token class-name">String</span> condition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandler1"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">//可以是你要处理的方法</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandler1 handler"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>soccessor <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                soccessor<span class="token punctuation">.</span><span class="token function">handleRequest</span><span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<p>这种自己实现的观察者模式才是比较常见能解耦两个模块</p>
-<p>优缺点<br>1.观察者模式和被观察者之间是抽象耦合，应对业务变化<br>2.增强系统灵活性，可扩展性</p>
-<p>缺点<br>在应用观察者模式时，需要考虑一下开发效率和运行效率问题</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcreteHandler2</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleRequest</span><span class="token punctuation">(</span><span class="token class-name">String</span> condition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandler2"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">//可以是你要处理的方法</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandle2 handler"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>soccessor <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                soccessor<span class="token punctuation">.</span><span class="token function">handleRequest</span><span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们看在客户端 把所有链条都生产出来 然后给链条指定后前后关系，然后就在开始的链条上开始请求，因为如果有没有处理会进行下一环节，如果有处理那么就交给当前去处理</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> 
+    <span class="token annotation punctuation">@TestOnly</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token class-name">ConcreteHandler1</span> concreteHandler1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteHandler1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">ConcreteHandler2</span> concreteHandler2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteHandler2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        concreteHandler1<span class="token punctuation">.</span>soccessor <span class="token operator">=</span> concreteHandler2<span class="token punctuation">;</span>
+        concreteHandler1<span class="token punctuation">.</span><span class="token function">handleRequest</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandler1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>四、优缺点<br>优点<br>降低耦合度。它将请求的发送者和接收者解耦<br>简化了对象，使得对象不需要知道链的结构<br>增强给对象指派职责的灵活性，允许动态地新增或者删除责任链<br>增加新的请求处理类方便</p>
+<p>缺点<br>不能保证请求一定被接收；<br>系统性能将受到一定影响，调试时不方便，可能会造成循环调用</p>
 
                 
             </div>
@@ -739,13 +711,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="设计模式-责任链模式">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="设计模式-策略模式模式">
                         
-                        <span class="card-title">设计模式-责任链模式</span>
+                        <span class="card-title">设计模式-策略模式模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -788,13 +760,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/04/%E8%AE%BE%E8%AE%A1%E5%BD%95%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="设计模式-备忘录模式">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-观察者模式">
                         
-                        <span class="card-title">设计模式-备忘录模式</span>
+                        <span class="card-title">设计模式-观察者模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -805,7 +777,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-06
                             </span>
                         <span class="publish-author">
                             
