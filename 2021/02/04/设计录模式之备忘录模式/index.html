@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式-适配器模式, Vinda">
+    <meta name="keywords" content="设计模式-备忘录模式, Vinda">
     <meta name="description" content="人生若如初见">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式-适配器模式 | Vinda</title>
+    <title>设计模式-备忘录模式 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式-适配器模式</h1>
+                    <h1 class="description center-align post-title">设计模式-备忘录模式</h1>
                 </div>
             </div>
         </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-31
+                    2021-02-04
                 </div>
                 
 
@@ -459,49 +459,98 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>适配器模式把一个类的接口变换成客户端所期待的另外一种接口，从而使原本不匹配的接口能在一起工作</p>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>（1）系统需要使用一个现有的类，而此类的接口不符合系统的需要，就是接口不兼容<br>（2）想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的类，包括一些可能在将来引进的类一起工作<br>（3）需要一个统一的输出接口，而输出端类型不可预知</p>
-<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/adapter.png" alt="类图"></p>
-<p>我们可以看到<br>Target 目标角色 也就是所期待得到的接口<br>Adaptee 现在需要适配的接口<br>Adapter 适配器角色 也是核心类把源接口转成目标接口 这里不能是接口 而必须是特定的类</p>
-<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>原来要适配的接口</p>
+                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在不破坏封闭的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样，以后可以将对象恢复到原先保存的状态。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>需要保存一个对象在某个时刻的某种状态或部分状态。<br>如果用一个接口来让其他对象得到这些状态，将会暴露对象的实现细节，并破坏对象的封装性，一个对象不希望外界直接访问内部状态，通过中间对象可以间接访问其内部状态。</p>
+<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p>Originator负责创建一个备忘录，可以记录，恢复自身内部状态，同时可以根据需要决定存储自身的哪些内部状态</p>
+<p>Memoto 备忘录角色，用于存储Originator的内部状态，并且可以防止Originator以外的访问</p>
+<p>Caretaker 负责存储备忘录,不能对备忘录的内容进行操作和访问，只能将备忘录传递给其他对象，如果里面加个index 和一个集合就能做到撤回和重做之类的操作了</p>
+<p><img src="/images/meoto.png" alt="类图"></p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Memoto</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> mCheckpoint<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> mLifeValue<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> mWeapon<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Volt220</span>  <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Caretaker</span> <span class="token punctuation">&#123;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt220</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">Memoto</span> memoto<span class="token punctuation">;</span>
 
-        <span class="token keyword">return</span> <span class="token number">220</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">archive</span><span class="token punctuation">(</span><span class="token class-name">Memoto</span> memoto<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>memoto <span class="token operator">=</span> memoto<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token keyword">public</span> <span class="token class-name">Memoto</span> <span class="token function">getMemoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> memoto<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>定义要适配的接口</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FiveVolt</span> <span class="token punctuation">&#123;</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>leak<span class="token punctuation">.</span>memoto</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CallOfDuty</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> mCheckPinot <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> mLifeValue <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> mWeapon <span class="token operator">=</span> <span class="token string">"沙漠之鹰"</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开始玩游戏"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mLifeValue <span class="token operator">-=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+        mCheckPinot<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"退出游戏"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token keyword">public</span> <span class="token class-name">Memoto</span> <span class="token function">createMemoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">Memoto</span> memoto <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Memoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        memoto<span class="token punctuation">.</span>mCheckpoint <span class="token operator">=</span> mCheckPinot<span class="token punctuation">;</span>
+        memoto<span class="token punctuation">.</span>mLifeValue <span class="token operator">=</span> mLifeValue<span class="token punctuation">;</span>
+        memoto<span class="token punctuation">.</span>mWeapon <span class="token operator">=</span> mWeapon<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> memoto<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">restore</span><span class="token punctuation">(</span><span class="token class-name">Memoto</span> memoto<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mCheckPinot <span class="token operator">=</span> memoto<span class="token punctuation">.</span>mCheckpoint<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mLifeValue <span class="token operator">=</span> memoto<span class="token punctuation">.</span>mLifeValue<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mWeapon <span class="token operator">=</span> memoto<span class="token punctuation">.</span>mWeapon<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>适配的核心接口</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VoltAdapter</span> <span class="token keyword">extends</span> <span class="token class-name">Volt220</span> <span class="token keyword">implements</span> <span class="token class-name">FiveVolt</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>leak<span class="token punctuation">.</span>memoto</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">CallOfDuty</span> game <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CallOfDuty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        game<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token class-name">Caretaker</span> caretaker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Caretaker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        caretaker<span class="token punctuation">.</span><span class="token function">archive</span><span class="token punctuation">(</span>game<span class="token punctuation">.</span><span class="token function">createMemoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        game<span class="token punctuation">.</span><span class="token function">quit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">CallOfDuty</span> newGame <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CallOfDuty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        newGame<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span>caretaker<span class="token punctuation">.</span><span class="token function">getMemoto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">VoltAdapter</span> voltAdapter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VoltAdapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        voltAdapter<span class="token punctuation">.</span><span class="token function">getVolt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>Android其他使用<br>在Android上适配器也被用来适配多种数据来源 我们将view的组装交给用户 ListView只需要拿到适配器就可以显示ui，隔离变化 拥抱变化</p>
-<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>1.更好的复用性<br>系统需要使用现有的类 而此类的接口不符合系统的需要，那么通过适配器可以让这些功能得到更好的复用<br>2. 更好扩展性<br>实现适配器的功能时候，可以调用自己开发的功能，从而自然地扩展系统的功能</p>
-<p>缺点<br>过多使用适配器会让系统非常凌乱，不容易整体把控。</p>
+<p>CallOfDuty 这里就是Originator 他这里是具体也业务逻辑 Caretaker是对备忘录的对象进行存储，业务需要把对象存储到这个Caretaker备忘录之中</p>
+<p>备忘录是在不破坏封装的条件下，通过备忘录对象储存另外一个对象内部状态的快照，在将来合适的时候把这个对象还原到存储起来的状态的状态。<br>优点：<br>给用户提供了一种可以恢复状态的机制，可以使用户能比较方便地回到某个历史状态<br>实现信息的封装，使得用户不需要关心状态的保存细节。<br>缺点<br>消耗资源，如果类的成员变量过多，势必会占用较大的资源，而且每一次的保存都会消耗一定的内存。</p>
 
                 
             </div>
@@ -690,13 +739,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="设计模式-代理模式模式">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-观察者模式">
                         
-                        <span class="card-title">设计模式-代理模式模式</span>
+                        <span class="card-title">设计模式-观察者模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -707,7 +756,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-06
                         </span>
                         <span class="publish-author">
                             
@@ -739,13 +788,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/30/%E7%BC%96%E5%86%99%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E8%89%BA%E6%9C%AF/">
+                <a href="/2021/02/03/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="读书笔记--编写可读代码的艺术">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="设计模式-模板方法模式">
                         
-                        <span class="card-title">读书笔记--编写可读代码的艺术</span>
+                        <span class="card-title">设计模式-模板方法模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -756,14 +805,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
-                                    日常积累
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
                                 </a>
                             
                             
@@ -773,8 +822,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">读书笔记</span>
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
                     </a>
                     
                 </div>

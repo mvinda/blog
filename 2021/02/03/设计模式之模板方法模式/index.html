@@ -461,7 +461,7 @@
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>定义一个操作中的算法框架，而将一些步骤延迟到子类中吗，让子类可以不改变算法的结构的既可以重定义该算法的特定步骤</p>
 <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>1.一个子类有共有的方法，并且逻辑基本相同<br>2.重要，复杂的算法可以把核心算法设计为一个模板方法，周边的相关细节功能由各个子类去实现<br>3.重构的时候，模板方法模式是一个经常使用的模式，吧相同的代码抽取到父类中，然后通过钩子函数约束行为</p>
-<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/medias/paper/template.png" alt="单例类图"></p>
+<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/template.png" alt="类图"></p>
 <p>AbsTemplate定义了一个算法框架<br>ConcreteImplA 具体实现类A<br>ConcreteImplB 具体实现类B</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractComputer</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">powerOn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -700,18 +700,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/02/03/%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/04/%E8%AE%BE%E8%AE%A1%E5%BD%95%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="设计模式-模板方法模式">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="设计模式-备忘录模式">
                         
-                        <span class="card-title">设计模式-模板方法模式</span>
+                        <span class="card-title">设计模式-备忘录模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -721,9 +720,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -736,7 +735,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -755,7 +753,7 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/01/%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/02/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
