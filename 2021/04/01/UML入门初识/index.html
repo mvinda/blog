@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式-工厂模式, Vinda">
+    <meta name="keywords" content="UML入门, Vinda">
     <meta name="description" content="人生若如初见">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式-工厂模式 | Vinda</title>
+    <title>UML入门 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式-工厂模式</h1>
+                    <h1 class="description center-align post-title">UML入门</h1>
                 </div>
             </div>
         </div>
@@ -410,8 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                <span class="chip bg-color">设计模式</span>
+                            <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                                <span class="chip bg-color">日常积累</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                设计模式
+                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
+                                日常积累
                             </a>
                         
                     </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-10
+                    2021-04-01
                 </div>
                 
 
@@ -459,89 +459,36 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>工厂模式一个用于创建对象的接口，让子类来决定需要生产什么，可以隐藏生产的细节</p>
-<h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p><img src="/images/factory.png" alt="类图"></p>
-<h2 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h2><p>代码实现方式可以很多，但是我比较喜欢的是客户端可以动态生成的方式，也更加动态</p>
-<p>工厂的核心类，根据传入的类型生产确定的产品</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Factory</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Prodouct</span><span class="token punctuation">></span></span> <span class="token class-name">T</span> <span class="token function">createFactory</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> clz<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我们定义两个链条 大概是根据逻辑判断是自己要处理还是交给其他人处理，如果自己处理就自己处理掉 如果别人处理是别人处理掉</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span>  <span class="token keyword">class</span> <span class="token class-name">RealFactory</span> <span class="token keyword">extends</span> <span class="token class-name">Factory</span><span class="token punctuation">&#123;</span>
-
-   <span class="token keyword">public</span>  <span class="token class-name">RealFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-
-   <span class="token punctuation">&#125;</span>
-   <span class="token annotation punctuation">@Override</span>
-   <span class="token keyword">public</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Prodouct</span><span class="token punctuation">></span></span> <span class="token class-name">T</span> <span class="token function">createFactory</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> clz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-      <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
-         <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span>clz<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-         e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">&#125;</span>
-      <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-   <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcreteHandler2</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleRequest</span><span class="token punctuation">(</span><span class="token class-name">String</span> condition<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>condition<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandler2"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">//可以是你要处理的方法</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"ConcreteHandle2 handler"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>soccessor <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                soccessor<span class="token punctuation">.</span><span class="token function">handleRequest</span><span class="token punctuation">(</span>condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Product1</span> <span class="token keyword">extends</span> <span class="token class-name">Prodouct</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Product1</span> <span class="token keyword">extends</span> <span class="token class-name">Prodouct</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">&#123;</span>
-   <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-       <span class="token class-name">RealFactory</span> realFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RealFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-       <span class="token class-name">Product1</span> factory <span class="token operator">=</span> realFactory<span class="token punctuation">.</span><span class="token function">createFactory</span><span class="token punctuation">(</span><span class="token class-name">Product1</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   <span class="token punctuation">&#125;</span>
-
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>四、总结</p>
-<p>工厂生产模式可以对外隐藏实现细节，生产大量的对象，优点较多，对于抽象工厂就不再深究，因为抽象工厂就是把工厂也抽象了，不同的工厂专门生产某种产品，这样会导致工厂类的爆炸，这边就不再多说，工作中这种比较动态的工厂模式是比较好用的</p>
+                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>当有新人接手你的项目时候，你是否有足够的项目结构介绍资料给到新人？ 当你作为一个新人接手别人的项目的时候，看项目的结构图的时候是否会一脸懵逼，因为你没有系统的学习UML相关的知识。了解UML图的绘制一方面可以检查自己的代码设计，并能向他人进行讲解。</p>
+<p><img src="/images/UML_background.png" alt="背景"></p>
+<h2 id="介绍常见的箭头类型"><a href="#介绍常见的箭头类型" class="headerlink" title="介绍常见的箭头类型"></a>介绍常见的箭头类型</h2><p><img src="/images/arrow.png" alt="箭头"></p>
+<p>如上图我们从左往右依次介绍一下，分别是 依赖关系，关联关系，继承关系，实现关系，聚合关系，组合关系</p>
+<p>依赖关系：所谓依赖关系就是你这个类要能执行必须依赖另外一个对象，这样你可以把箭头指向这个类<br>关联关系：就是你这个类会使用到另外一个类，但是不是一定要用这个类。<br>继承关系：你这个类需要继承另外一个类<br>实现关系：你这个类会实现某个接口类<br>聚合：聚合表示一种弱拥有关系，体现的是A对象可以包含B但是B对象不是A对象的一部分，例如燕群可以包含一只燕，但是燕子也可以自己一个<br>组合：合成是一种强拥有关系，体现了严格的部分和整体关系，例如人是又器官组成的，器官离开了人不可以存活</p>
+<h2 id="分别举个例子"><a href="#分别举个例子" class="headerlink" title="分别举个例子"></a>分别举个例子</h2><p>依赖关系：<br>我们可以看到这个类的实现必须要依赖AndroidPhone这个类<br><img src="/images/uml_relyOn.png" alt="依赖关系"></p>
+<p>继承关系:<br><img src="/images/uml_extend.png" alt="继承关系"></p>
+<p><img src="/images/uml_extend2.png" alt="继承关系"></p>
+<p>实现关系<br><img src="/images/uml_implements.png" alt="实现关系"></p>
+<p><img src="/images/uml_implements2.png" alt="实现关系"></p>
+<p>聚合与组合<br><img src="/images/uml_combination.png" alt="聚合与组合"></p>
+<p><img src="/images/uml_combination2.png" alt="聚合与组合"></p>
+<p>记住聚合跟组合的区别就是在两个类是否可以独立工作</p>
+<p><img src="/images/uml_class_all.png" alt="整体类图全貌，常见类图画法"></p>
+<h2 id="活动图"><a href="#活动图" class="headerlink" title="活动图"></a>活动图</h2><p>圆角矩形：表示“动作”<br><img src="/images/uml_active.png" alt="动作"></p>
+<p>菱形：表示“决策”<br><img src="/images/uml_decision.png" alt="决策"></p>
+<p>粗实线：表示并行活动的开始（分离）和结束（汇合）<br><img src="/images/uml_decision.png" alt="结束和分离"></p>
+<p>黑圆：工作流的开始（初始节点）<br><img src="/images/uml_start.png" alt="开始"></p>
+<p>黑圈套住的黑圆：工作流的结束（结束节点）<br><img src="/images/uml_end_point.png" alt="结束"></p>
+<p>活动图的一些规则<br>第一个粗实线之后可以有若干分支，每个分支都是并行执行的<br>• 第二个粗实线之前，所有的分支汇合，所有的分支活动都完成才进入之后的环节<br>• 初始节点有且只有一个，结束节点可能不止一个</p>
+<p><img src="/images/uml_all_active.png" alt="常见的活动图"></p>
+<p>一些注意事项：<br>• 当有多个对象出现在活动图中时，可以考虑引入泳道<br>• 一个活动只能存在于唯一的泳道里</p>
+<p><img src="/images/uml_some_active.png" alt="常见的多泳道活动图"></p>
+<h2 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h2><p>对象的三种命名方式：</p>
+<p>显示实例名和类名，方式：实例名:类名<br>只显示类名，表示它是一个匿名对象，方式：:类名<br>只显示实例名，方式：实例名</p>
+<p><img src="/images/uml_time.png" alt="时序图"></p>
+<p>同步消息：消息的发送者把消息传递给接收者后停止活动，等待消息的接收者放弃或者返回消息，之<br>后才能执行下一步操作<br>• 异步消息：消息的发送者把消息传递给接收者后继续自己的活动，不等待接受者放弃或者返回消息</p>
+<p>组合片段（Combined Fragments） • 抉择（Alt）：与 if…then…else 对应<br>• 选项（Opt）：表示符合条件时执行<br>• 循环（Loop）：与 for 或者 foreach 对应<br>• 并行（Par）：与多线程对应</p>
+<p><img src="/images/uml_time_if.png" alt="时序图"></p>
+<p><img src="/images/uml_time_loop.png" alt="时序图"></p>
 
                 
             </div>
@@ -556,8 +503,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
+                                <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                                    <span class="chip bg-color">日常积累</span>
                                 </a>
                             
                         </div>
@@ -726,17 +673,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/02/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/04/01/UML%E5%85%A5%E9%97%A8%E5%88%9D%E8%AF%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="设计模式-Builder模式">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="UML入门">
                         
-                        <span class="card-title">设计模式-Builder模式</span>
+                        <span class="card-title">UML入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -746,26 +694,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-20
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
+                                    日常积累
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                        <span class="chip bg-color">日常积累</span>
                     </a>
                     
                 </div>
@@ -779,13 +728,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/02/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/03/08/%E5%86%85%E5%AD%98%E6%8A%96%E5%8A%A8%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2MAT%E6%A3%80%E6%B5%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="设计模式-策略模式模式">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="MAT内存泄露与内存抖动">
                         
-                        <span class="card-title">设计模式-策略模式模式</span>
+                        <span class="card-title">MAT内存泄露与内存抖动</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -796,14 +745,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E4%BC%98%E5%8C%96/" class="post-category">
+                                    软件优化
                                 </a>
                             
                             
@@ -813,8 +762,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E4%BC%98%E5%8C%96/">
+                        <span class="chip bg-color">软件优化</span>
                     </a>
                     
                 </div>
