@@ -151,43 +151,43 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://example.com/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/</loc>
-    <lastmod>2021-11-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/Android%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <loc>http://example.com/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/</loc>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/%E8%BD%AF%E4%BB%B6%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -195,36 +195,36 @@
 
   
   <url>
-    <loc>http://example.com/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <loc>http://example.com/categories/Android%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81/</loc>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Android%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <loc>http://example.com/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/</loc>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E8%BD%AF%E4%BB%B6%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/</loc>
-    <lastmod>2021-11-13</lastmod>
+    <lastmod>2021-12-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
