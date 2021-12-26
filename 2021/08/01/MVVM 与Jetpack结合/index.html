@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式-代理模式模式, Vinda">
+    <meta name="keywords" content="MVVM与JetPacket结合, Vinda">
     <meta name="description" content="慢就是快,快就是慢">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式-代理模式模式 | Vinda</title>
+    <title>MVVM与JetPacket结合 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式-代理模式模式</h1>
+                    <h1 class="description center-align post-title">MVVM与JetPacket结合</h1>
                 </div>
             </div>
         </div>
@@ -410,8 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                <span class="chip bg-color">设计模式</span>
+                            <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                                <span class="chip bg-color">日常积累</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                设计模式
+                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
+                                架构
                             </a>
                         
                     </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-02-01
+                    2021-08-01
                 </div>
                 
 
@@ -459,134 +459,520 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>为其他对象提供一种代理以控制对这个对象的访问。在直接访问对象时带来的问题，比如说：要访问的对象在远程的机器上。在面向对象系统中，有些对象由于某些原因（比如对象创建开销很大，或者某些操作需要安全控制，或者需要进程外的访问），直接访问会给使用者或者系统结构带来很多麻烦,或者想在访问一个类时做一些控制，返回前后做一些事情都是可以，我们可以在访问此对象时加上一个对此对象的访问层,</p>
-<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>有个人想打官司 ，他可以自己打官司也可以请律师帮忙打官司，律师就是他们的代理人<br>定义一个接口来定行为</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ILawsuit</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//提交举证</span>
-    <span class="token keyword">boolean</span> <span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//进行举证</span>
-    <span class="token keyword">boolean</span> <span class="token function">burden</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//开始辩护</span>
-    <span class="token keyword">boolean</span> <span class="token function">defend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//诉讼完成</span>
-    <span class="token keyword">boolean</span> <span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>小明去打官司</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> xiaoming <span class="token keyword">implements</span> <span class="token class-name">ILawsuit</span> <span class="token punctuation">&#123;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开始提交"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">burden</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开始举证"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">defend</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开始辩护"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"结束"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>MVVM是目前谷歌推荐的Android开发层次框架，如果跟JetPacket相互结合 可以更好的进行相关的开发。</p>
+<h1 id="使用到的JetPacket组件"><a href="#使用到的JetPacket组件" class="headerlink" title="使用到的JetPacket组件"></a>使用到的JetPacket组件</h1><p>LiveData 、Room 、ViewModel、DataBinding</p>
+<h1 id="代码分层分包"><a href="#代码分层分包" class="headerlink" title="代码分层分包"></a>代码分层分包</h1><p>比如我们需要开发一个用户信息模块 根据mvvm的设计理念我们可以这个分包</p>
+<pre class="line-numbers language-none"><code class="language-none">|-- api
+|-- room
+|-- userInfo
+|   |-- model
+|   |-- repository
+|   |-- view
+|   |-- viewmodel
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<p>代理律师 帮助小明打官司 ，只需要小明传入材料</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StaticProxy</span> <span class="token keyword">implements</span> <span class="token class-name">ILawsuit</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">ILawsuit</span> mILawsuit<span class="token punctuation">;</span>
+<ul>
+<li>api 是结合retrofit的请求库 作为全局的网络请求url封装</li>
+<li>room 作为全局数据库的一个封装包，提供各种持久化数据库的入口</li>
+<li>model  作为一个小功能的数据层</li>
+<li>repository 是当这个功能的获取数据比较复杂的时候可以多加一层</li>
+<li>view是作为数据的显示层</li>
+<li>viewmodel 作为viewmodel层主要是进行逻辑处理</li>
+</ul>
+<h1 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h1><p>1.别忘了添加权限</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;uses-permission android:name&#x3D;&quot;android.permission.INTERNET&quot; &#x2F;&gt;
 
-    <span class="token class-name">StaticProxy</span><span class="token punctuation">(</span><span class="token class-name">ILawsuit</span> iLawsuit<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        mILawsuit <span class="token operator">=</span> iLawsuit<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-    <span class="token punctuation">&#125;</span>
+<p>2.dataBinding 需要打开</p>
+<pre class="line-numbers language-none"><code class="language-none">dataBinding &#123;
+     enabled &#x3D; true
+ &#125;
+ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="3">
+<li>添加环境依赖</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">implementation &#39;androidx.lifecycle:lifecycle-extensions:2.2.0&#39;
+implementation &#39;com.squareup.retrofit2:retrofit:2.6.2&#39;
+implementation &#39;com.squareup.retrofit2:converter-gson:2.4.0&#39;
+implementation &#39;com.squareup.picasso:picasso:2.71828&#39;
+implementation &#39;androidx.room:room-runtime:2.2.2&#39;
+implementation &#39;androidx.swiperefreshlayout:swiperefreshlayout:1.0.0&#39;
+implementation &#39;de.hdodenhof:circleimageview:3.0.1&#39;
+annotationProcessor &#39;androidx.room:room-compiler:2.2.2&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> mILawsuit<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">burden</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> mILawsuit<span class="token punctuation">.</span><span class="token function">burden</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+<ol start="4">
+<li>定义model层</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">@Entity(tableName &#x3D; &quot;user&quot;)
+public class User &#123;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">defend</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> mILawsuit<span class="token punctuation">.</span><span class="token function">defend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    @PrimaryKey()
+    @ColumnInfo(name &#x3D; &quot;id&quot;, typeAffinity &#x3D; ColumnInfo.INTEGER)
+    public int id;
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> mILawsuit<span class="token punctuation">.</span><span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+    @ColumnInfo(name &#x3D; &quot;name&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    public String name;
+
+    @ColumnInfo(name &#x3D; &quot;avatar&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    @SerializedName(&quot;avatar_url&quot;)
+    public String avatar;
+
+
+
+
+    @ColumnInfo(name &#x3D; &quot;followers&quot;, typeAffinity &#x3D; ColumnInfo.INTEGER)
+    public int followers;
+
+
+    @ColumnInfo(name &#x3D; &quot;following&quot;, typeAffinity &#x3D; ColumnInfo.INTEGER)
+    public int following;
+
+
+    @ColumnInfo(name &#x3D; &quot;blog&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    public String blog;
+
+
+    @ColumnInfo(name &#x3D; &quot;company&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    public String company;
+
+
+    @ColumnInfo(name &#x3D; &quot;bio&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    public String bio;
+
+
+    @ColumnInfo(name &#x3D; &quot;location&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    public String location;
+
+
+    @ColumnInfo(name &#x3D; &quot;html_url&quot;, typeAffinity &#x3D; ColumnInfo.TEXT)
+    @SerializedName(&quot;html_url&quot;)
+    public String htmlUrl;
+
+    public User(
+            int id, String name, String avatar, int followers, int following, String blog, String company, String bio, String location, String htmlUrl) &#123;
+        this.id &#x3D; id;
+        this.name &#x3D; name;
+        this.avatar &#x3D; avatar;
+        this.followers &#x3D; followers;
+        this.following &#x3D; following;
+        this.blog &#x3D; blog;
+        this.company &#x3D; company;
+        this.bio &#x3D; bio;
+        this.location &#x3D; location;
+        this.htmlUrl &#x3D; htmlUrl;
+
+    &#125;
+
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="5">
+<li>创建数据库</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">
+@Database(entities &#x3D; User.class, version &#x3D; 1, exportSchema &#x3D; false)
+public abstract class UserDatebase extends RoomDatabase &#123;
+    private static final String DATABASE_NAME &#x3D; &quot;user_db&quot;;
+    private static UserDatebase databaseInstance;
+
+    public static synchronized UserDatebase getInstance(Context context) &#123;
+        if (databaseInstance &#x3D;&#x3D; null) &#123;
+            databaseInstance &#x3D; Room.databaseBuilder(context.getApplicationContext(), UserDatebase.class, DATABASE_NAME).build();
+
+        &#125;
+        return databaseInstance;
+    &#125;
+
+
+    public abstract UserDao getUserDao();
+
+
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+@Dao
+public interface UserDao &#123;
+
+    @Insert(onConflict &#x3D; OnConflictStrategy.REPLACE)
+    void insertUser(User user);
+
+
+    @Delete
+    void deleteStudent(User user);
+
+
+    @Query(&quot;SELECT * FROM user WHERE name&#x3D; :name&quot;)
+    LiveData&lt;User&gt; getUserByName(String name);
+
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>6.定义网络请求</p>
+<pre class="line-numbers language-none"><code class="language-none">
+public interface API &#123;
+
+
+    @GET(&quot;users&#x2F;&#123;userId&#125;&quot;)
+    Call&lt;User&gt; getUser(@Path(&quot;userId&quot;) String userId);
+
+
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">
+public class RetrofitClient &#123;
+
+    private static final String BASE_URL &#x3D; &quot;http:&#x2F;&#x2F;www.baidu.com&quot;;
+    private static RetrofitClient retrofitClient;
+    private Retrofit retrofit;
+
+
+    private RetrofitClient() &#123;
+        retrofit &#x3D; new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+    &#125;
+
+
+    public static synchronized RetrofitClient getInstance() &#123;
+
+        if (retrofitClient &#x3D;&#x3D; null) &#123;
+            retrofitClient &#x3D; new RetrofitClient();
+
+        &#125;
+        return retrofitClient;
+    &#125;
+
+
+    public API getApi() &#123;
+        return retrofit.create(API.class);
+    &#125;
+
+
+&#125;
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>代理关系建立</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">xiaoming xiaoming1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">xiaoming</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>7.将数据库和网络库的获取方式放在application方便获取</p>
+<pre class="line-numbers language-none"><code class="language-none">
 
- <span class="token class-name">StaticProxy</span> staticProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StaticProxy</span><span class="token punctuation">(</span>xiaoming1<span class="token punctuation">)</span><span class="token punctuation">;</span>
- staticProxy<span class="token punctuation">.</span><span class="token function">burden</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- staticProxy<span class="token punctuation">.</span><span class="token function">defend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- staticProxy<span class="token punctuation">.</span><span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- staticProxy<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+public class MyApplication extends android.app.Application &#123;
 
+    private static UserDatebase userDatebase;
+    private static API api;
 
+    @Override
+    public void onCreate() &#123;
+        super.onCreate();
+        userDatebase &#x3D; UserDatebase.getInstance(this);
+        api &#x3D; RetrofitClient.getInstance().getApi();
 
-<p>上面使用到的是静态代理</p>
-<p>我更喜欢动态代理，因为动态代理可以动态帮所有人做任何事情，你也可以在invoke方法做事情的时候添加你想做的事情</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DynamicProxy</span> <span class="token keyword">implements</span> <span class="token class-name">InvocationHandler</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token class-name">Object</span> obj<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">DynamicProxy</span><span class="token punctuation">(</span><span class="token class-name">Object</span> object<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        obj <span class="token operator">=</span> object<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    &#125;
 
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">invoke</span><span class="token punctuation">(</span><span class="token class-name">Object</span> proxy<span class="token punctuation">,</span> <span class="token class-name">Method</span> method<span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">&#123;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开始执行"</span><span class="token operator">+</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">Object</span> result <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"结束执行"</span><span class="token operator">+</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    public static API getApi() &#123;
+
+        return api;
+    &#125;
 
 
-<p>通过动态代理就可以拿到代理接口的代理类 做到一个动态代理的效果</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">DynamicProxy</span> dynamicProxy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DynamicProxy</span><span class="token punctuation">(</span>xiaoming<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token class-name">ClassLoader</span> classLoader <span class="token operator">=</span> xiaoming<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token class-name">ILawsuit</span> lawsuit <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">ILawsuit</span><span class="token punctuation">)</span> <span class="token class-name">Proxy</span><span class="token punctuation">.</span><span class="token function">newProxyInstance</span><span class="token punctuation">(</span>classLoader<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Class</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token class-name">ILawsuit</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> dynamicProxy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      lawsuit<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      lawsuit<span class="token punctuation">.</span><span class="token function">burden</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      lawsuit<span class="token punctuation">.</span><span class="token function">defend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      lawsuit<span class="token punctuation">.</span><span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    public static UserDatebase getUserDatebase() &#123;
+        return userDatebase;
+    &#125;
+&#125;
 
-<p>优缺点<br>优点： 1、职责清晰。 2、高扩展性。 3、智能化。<br>缺点： 1、由于在客户端和真实主题之间增加了代理对象，因此有些类型的代理模式可能会造成请求的处理速度变慢</p>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>8.假设我们要获取的数据非常复杂，我们可以多搞一个repository层(当然这一层也是可以没有的)</p>
+<pre class="line-numbers language-none"><code class="language-none">
+public class UserRepository &#123;
+    private String TAG &#x3D; this.getClass().getName();
+
+
+    private UserDao userDao;
+
+    private API api;
+
+
+    public UserRepository(UserDao userDao, API api) &#123;
+        this.api &#x3D; api;
+        this.userDao &#x3D; userDao;
+    &#125;
+
+
+    public LiveData&lt;User&gt; getUser(final String name) &#123;
+
+        refresh(name);
+        return userDao.getUserByName(name);
+
+    &#125;
+
+
+    public void refresh(String name) &#123;
+
+        api.getUser(name).enqueue(new Callback&lt;User&gt;() &#123;
+            @Override
+            public void onResponse(Call&lt;User&gt; call, Response&lt;User&gt; response) &#123;
+                if (response.body() !&#x3D; null) &#123;
+                    insterUer(response.body());
+                &#125;
+            &#125;
+
+            @Override
+            public void onFailure(Call&lt;User&gt; call, Throwable t) &#123;
+                Log.i(TAG, &quot;onFailure: &quot;, t);
+            &#125;
+        &#125;);
+    &#125;
+
+
+    private void insterUer(final User user) &#123;
+        AsyncTask.execute(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                userDao.insertUser(user);
+            &#125;
+        &#125;);
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>9.将viewmodel层给实现</p>
+<pre class="line-numbers language-none"><code class="language-none">
+
+
+public class UserViewModel extends AndroidViewModel &#123;
+    private LiveData&lt;User&gt; user;
+    private UserRepository userRepository;
+    private String userName &#x3D; &quot;whd&quot;;
+
+
+    public UserViewModel(@NonNull Application application) &#123;
+        super(application);
+
+        UserDatebase userDatebase &#x3D; MyApplication.getUserDatebase();
+        UserDao userDao &#x3D; userDatebase.getUserDao();
+        userRepository &#x3D; new UserRepository(userDao, MyApplication.getApi());
+        user &#x3D; userRepository.getUser(userName);
+    &#125;
+
+
+
+    public LiveData&lt;User&gt; getUser()&#123;
+
+        return user;
+    &#125;
+
+    public void refresh()&#123;
+        userRepository.refresh(userName);
+    &#125;
+
+
+
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>10.我们再看下view层 包括Activity和xml</p>
+<pre class="line-numbers language-none"><code class="language-none">
+
+class Main2Activity : AppCompatActivity() &#123;
+
+    override fun onCreate(savedInstanceState: Bundle?) &#123;
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main2)
+
+        var binding &#x3D;
+            DataBindingUtil.setContentView&lt;ActivityMain2Binding&gt;(this, R.layout.activity_main2)
+        val userViewModel &#x3D; ViewModelProvider(this).get(UserViewModel::class.java)
+        userViewModel.user.observe(this,
+            Observer&lt;User&gt; &#123;
+                binding.user &#x3D; it
+
+            &#125;)
+
+        val swipeRefresh &#x3D; binding.swipeRefresh
+        swipeRefresh.setOnRefreshListener &#123;
+            userViewModel.refresh()
+
+            swipeRefresh.isRefreshing &#x3D; false
+        &#125;
+    &#125;
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>xml包括了一些数据的显示</p>
+<pre class="line-numbers language-mxl" data-language="mxl"><code class="language-mxl">
+&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot;?&gt;
+&lt;layout xmlns:android&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;&gt;
+
+
+    &lt;data&gt;
+
+        &lt;variable
+            name&#x3D;&quot;user&quot;
+            type&#x3D;&quot;com.example.mvvm_jetpack.userInfo.model.User&quot; &#x2F;&gt;
+    &lt;&#x2F;data&gt;
+
+    &lt;androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id&#x3D;&quot;@+id&#x2F;swipeRefresh&quot;
+        android:layout_width&#x3D;&quot;match_parent&quot;
+        android:layout_height&#x3D;&quot;match_parent&quot;&gt;
+
+
+        &lt;RelativeLayout
+            android:layout_width&#x3D;&quot;match_parent&quot;
+            android:layout_height&#x3D;&quot;wrap_content&quot;&gt;
+
+            &lt;ImageView
+                android:layout_width&#x3D;&quot;wrap_content&quot;
+                android:layout_height&#x3D;&quot;wrap_content&quot;
+                android:scaleType&#x3D;&quot;fitStart&quot;&gt;&lt;&#x2F;ImageView&gt;
+
+
+            &lt;view
+                android:layout_width&#x3D;&quot;match_parent&quot;
+                android:layout_height&#x3D;&quot;match_parent&quot;
+                android:layout_marginLeft&#x3D;&quot;128dp&quot;
+                android:layout_marginTop&#x3D;&quot;128dp&quot;
+                android:layout_marginRight&#x3D;&quot;128dp&quot;&gt;&lt;&#x2F;view&gt;
+
+            &lt;LinearLayout xmlns:app&#x3D;&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res-auto&quot;
+                android:layout_width&#x3D;&quot;match_parent&quot;
+
+                android:layout_height&#x3D;&quot;match_parent&quot;
+                android:layout_marginTop&#x3D;&quot;80dp&quot;
+                android:gravity&#x3D;&quot;center_horizontal&quot;
+                android:orientation&#x3D;&quot;vertical&quot;&gt;
+
+
+                &lt;de.hdodenhof.circleimageview.CircleImageView
+                    android:id&#x3D;&quot;@+id&#x2F;profile_image&quot;
+                    android:layout_width&#x3D;&quot;96dp&quot;
+                    android:layout_height&#x3D;&quot;96dp&quot;
+                    app:civ_border_color&#x3D;&quot;#CCCCCC&quot;
+                    app:civ_border_width&#x3D;&quot;2dp&quot;
+                    app:image&#x3D;&quot;@&#123;user.avatar&#125;&quot;
+
+                    &gt;&lt;&#x2F;de.hdodenhof.circleimageview.CircleImageView&gt;
+
+
+                &lt;TextView
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:text&#x3D;&quot;@&#123;user.name&#125;&quot;
+                    android:textSize&#x3D;&quot;22sp&quot;
+                    android:textStyle&#x3D;&quot;bold&quot;
+
+
+                    &gt;&lt;&#x2F;TextView&gt;
+
+                &lt;TextView
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:text&#x3D;&quot;@&#123;user.bio&#125;&quot;
+                    android:textSize&#x3D;&quot;16sp&quot;&gt;&lt;&#x2F;TextView&gt;
+
+
+                &lt;TextView
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:text&#x3D;&quot;@&#123;user.company&#125;&quot;
+                    android:textSize&#x3D;&quot;16sp&quot;&gt;&lt;&#x2F;TextView&gt;
+
+
+                &lt;TextView
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:text&#x3D;&quot;@&#123;user.location&#125;&quot;
+                    android:textSize&#x3D;&quot;16sp&quot;&gt;&lt;&#x2F;TextView&gt;
+
+
+                &lt;LinearLayout
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:orientation&#x3D;&quot;horizontal&quot;&gt;
+
+                    &lt;TextView
+                        android:layout_width&#x3D;&quot;wrap_content&quot;
+                        android:layout_height&#x3D;&quot;wrap_content&quot;
+                        android:text&#x3D;&quot;@&#123;user.followers&#125;&quot;
+                        android:textSize&#x3D;&quot;16sp&quot;&gt;&lt;&#x2F;TextView&gt;
+
+                    &lt;TextView
+                        android:layout_width&#x3D;&quot;wrap_content&quot;
+                        android:layout_height&#x3D;&quot;wrap_content&quot;
+                        android:layout_marginLeft&#x3D;&quot;12dp&quot;
+                        android:text&#x3D;&quot;@&#123;user.following&#125;&quot;
+                        android:textSize&#x3D;&quot;16dp&quot;
+
+
+                        &gt;&lt;&#x2F;TextView&gt;
+
+
+                &lt;&#x2F;LinearLayout&gt;
+
+                &lt;TextView
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:text&#x3D;&quot;@&#123;user.htmlUrl&#125;&quot;
+                    android:textSize&#x3D;&quot;16dp&quot; &#x2F;&gt;
+
+
+                &lt;TextView
+                    android:layout_width&#x3D;&quot;wrap_content&quot;
+                    android:layout_height&#x3D;&quot;wrap_content&quot;
+                    android:layout_marginTop&#x3D;&quot;8dp&quot;
+                    android:text&#x3D;&quot;@&#123;user.blog&#125;&quot;
+                    android:textSize&#x3D;&quot;16dp&quot; &#x2F;&gt;
+
+            &lt;&#x2F;LinearLayout&gt;
+
+
+        &lt;&#x2F;RelativeLayout&gt;
+
+
+    &lt;&#x2F;androidx.swiperefreshlayout.widget.SwipeRefreshLayout&gt;
+
+
+&lt;&#x2F;layout&gt;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>我们还将圆形头像的加载给到Picasa来加载</p>
+<pre class="line-numbers language-none"><code class="language-none">
+public class ImageViewBindAdapter &#123;
+
+    @BindingAdapter(value &#x3D; &#123;&quot;image&quot;, &quot;defaultImageResource&quot;&#125;, requireAll &#x3D; false)
+    public static void setImage(ImageView imageView, String imageUrl, int imageSource) &#123;
+
+
+        if (!TextUtils.isEmpty(imageUrl)) &#123;
+            Picasso.get().load(imageUrl).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_background).into(imageView);
+        &#125;
+    &#125;
+&#125;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上就是Mvvm结合Jetpack的使用，希望在平时项目中多运用，写出更高效和优质的代码。</p>
 
                 
             </div>
@@ -601,8 +987,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
+                                <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                                    <span class="chip bg-color">日常积累</span>
                                 </a>
                             
                         </div>
@@ -771,17 +1157,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/02/03/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/08/01/MVVM%20%E4%B8%8EJetpack%E7%BB%93%E5%90%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="设计模式-模板方法模式">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="MVVM与JetPacket结合">
                         
-                        <span class="card-title">设计模式-模板方法模式</span>
+                        <span class="card-title">MVVM与JetPacket结合</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -791,26 +1178,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
+                                    架构
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                        <span class="chip bg-color">日常积累</span>
                     </a>
                     
                 </div>
@@ -824,13 +1212,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">
+                <a href="/2021/04/01/UML%E5%85%A5%E9%97%A8%E5%88%9D%E8%AF%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="设计模式-适配器模式">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="UML入门">
                         
-                        <span class="card-title">设计模式-适配器模式</span>
+                        <span class="card-title">UML入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -841,14 +1229,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
+                                    日常积累
                                 </a>
                             
                             
@@ -858,8 +1246,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                        <span class="chip bg-color">日常积累</span>
                     </a>
                     
                 </div>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="设计模式之单例模式, Vinda">
-    <meta name="description" content="任何你无法向别人介绍清楚的知识，都不属于你">
+    <meta name="description" content="慢就是快,快就是慢">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -135,7 +135,7 @@
         <div class="logo-name">Vinda</div>
         <div class="logo-desc">
             
-            任何你无法向别人介绍清楚的知识，都不属于你
+            慢就是快,快就是慢
             
         </div>
     </div>
@@ -462,7 +462,21 @@
                 <h1 id="设计模式之单例模式"><a href="#设计模式之单例模式" class="headerlink" title="设计模式之单例模式"></a>设计模式之单例模式</h1><h2 id="1-为什么要学习单例？"><a href="#1-为什么要学习单例？" class="headerlink" title="1.为什么要学习单例？"></a>1.为什么要学习单例？</h2><p>单例模式应该是用得最多的设计模式之一，如果你的应用有个类很消耗资源 那么我们没有理由让他们不断创建</p>
 <h2 id="2-定义"><a href="#2-定义" class="headerlink" title="2. 定义"></a>2. 定义</h2><p>确保一个类只有一个实例，而且自行实例化，并向系统提供这个实例。</p>
 <h2 id="3-适合场景"><a href="#3-适合场景" class="headerlink" title="3.适合场景"></a>3.适合场景</h2><p>确保一个类只有一个对象的地方，避免产生多个对象消耗过多的资源，或者说创建一个对象需要耗费大量的资源 也需要用单例模式。</p>
-<p><img src="/images/singleInstance.png" alt="单例类图"></p>
+<pre class="line-numbers language-plantuml" data-language="plantuml"><code class="language-plantuml">class client&#123;
+&#125;
+
+class Singletion&#123;
+- Singletion()
++ getInstance():Singletion
+&#125;
+
+client --&gt;Singletion
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
 <h2 id="4-实现的关键点"><a href="#4-实现的关键点" class="headerlink" title="4.实现的关键点"></a>4.实现的关键点</h2><p>*构造方法不对外开发 一般是private</p>
 <p>*通过一个静态方法或者枚举返回单例对象</p>
 <p>*确保单例对象有且只有一个，尤其在多线程的环境下</p>
