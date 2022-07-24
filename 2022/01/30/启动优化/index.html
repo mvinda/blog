@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式之单例模式, Vinda">
+    <meta name="keywords" content="启动优化, Vinda">
     <meta name="description" content="慢就是快,快就是慢">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式之单例模式 | Vinda</title>
+    <title>启动优化 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式之单例模式</h1>
+                    <h1 class="description center-align post-title">启动优化</h1>
                 </div>
             </div>
         </div>
@@ -410,8 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                <span class="chip bg-color">设计模式</span>
+                            <a href="/tags/Android%E5%BC%80%E5%8F%91/">
+                                <span class="chip bg-color">Android开发</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" class="post-category">
-                                代码设计
+                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
+                                性能优化
                             </a>
                         
                     </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-01-22
+                    2022-01-30
                 </div>
                 
 
@@ -459,120 +459,76 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="设计模式之单例模式"><a href="#设计模式之单例模式" class="headerlink" title="设计模式之单例模式"></a>设计模式之单例模式</h1><h2 id="1-为什么要学习单例？"><a href="#1-为什么要学习单例？" class="headerlink" title="1.为什么要学习单例？"></a>1.为什么要学习单例？</h2><p>单例模式应该是用得最多的设计模式之一，如果你的应用有个类很消耗资源 那么我们没有理由让他们不断创建</p>
-<h2 id="2-定义"><a href="#2-定义" class="headerlink" title="2. 定义"></a>2. 定义</h2><p>确保一个类只有一个实例，而且自行实例化，并向系统提供这个实例。</p>
-<h2 id="3-适合场景"><a href="#3-适合场景" class="headerlink" title="3.适合场景"></a>3.适合场景</h2><p>确保一个类只有一个对象的地方，避免产生多个对象消耗过多的资源，或者说创建一个对象需要耗费大量的资源 也需要用单例模式。</p>
-<pre class="line-numbers language-plantuml" data-language="plantuml"><code class="language-plantuml">class client&#123;
-&#125;
-
-class Singletion&#123;
-- Singletion()
-+ getInstance():Singletion
-&#125;
-
-client --&gt;Singletion
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<h2 id="4-实现的关键点"><a href="#4-实现的关键点" class="headerlink" title="4.实现的关键点"></a>4.实现的关键点</h2><p>*构造方法不对外开发 一般是private</p>
-<p>*通过一个静态方法或者枚举返回单例对象</p>
-<p>*确保单例对象有且只有一个，尤其在多线程的环境下</p>
-<h2 id="5-多种单例的写法和优缺点"><a href="#5-多种单例的写法和优缺点" class="headerlink" title="5.多种单例的写法和优缺点"></a>5.多种单例的写法和优缺点</h2><p>5.1 饿汉方式</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton1</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">Singleton1</span> mSingleton1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Singleton1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Singleton1</span> <span class="token function">getSingleton1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> mSingleton1<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>优点：实现简单<br>缺点：饿汉在初始化声明的时候就已经初始化了这个对象，会造成内存的浪费，可能用户并不需要这个类，或者用不到</p>
-<p>5.2 懒汉方式</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton2</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Singleton2</span> mSingleton2 <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Singleton2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> <span class="token class-name">Singleton2</span> <span class="token function">getSingleton2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>mSingleton2 <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            mSingleton2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> mSingleton2<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>优点：在需要用的时候才初始化，减少资源浪费<br>缺点：缺点是在用的时候初始化会导致生成比较慢，在多线程的情况下会出现线程安全的问题，所以需要加锁，但是在加锁后又会有每次加锁的问题，进一步降低了性能。</p>
-<p>5.3 DLC</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton3</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">volatile</span> <span class="token class-name">Singleton3</span> mSingleton3 <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Singleton3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> <span class="token class-name">Singleton3</span> <span class="token function">getSingleton3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>mSingleton3 <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token class-name">Singleton3</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>mSingleton3 <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                    mSingleton3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> mSingleton3<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>优点：既能够在第一次用的时候初始化，又能够线程安全，而且能初始化后就不加锁了<br>缺点：比较复杂一点<br>注意 记得加上volatile 关键子，因为创建对象不是一个原子操作，可能会导致DCL失效，就是创建了但是没有初始化， volatile虽然会影响性能，但是跟准确性相比还是值得的</p>
-<p>为什么会失效，就是new 一个对象的时候<br>1.先分配内存<br>2.初始化成员变量<br>3.将对象指向分配的空间<br>由于执行是乱序的，可能先执行了3 再执行2 这样在多线程的情况下会出现没有初始化的成员变量的情况出现</p>
-<p>5.4 静态内部类</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Singleton4</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Singleton4Holder</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Singleton4</span> mSingleton4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Singleton4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Singleton4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">synchronized</span> <span class="token class-name">Singleton4</span> <span class="token function">getSingleton4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token class-name">Singleton4Holder</span><span class="token punctuation">.</span>mSingleton4<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>优点：既能保证线程安全，又能保证兼顾性能，推荐使<br>5.4.1 静态内部类加锁原理：<br>首先要了解类加载过程中的最后一个阶段：即类的初始化，类的初始化阶本质就是执行类构造器的方法。<br>方法：这不是由程序员写的程序，而是根据代码由javac编译器生成的。它是由类里面所有的类变量的赋值动作和静态代码块组成的。JVM内部会保证一个类的方法在多线程环境下被正确的加锁同步，也就是说如果多个线程同时去进行“类的初始化”，那么只有一个线程会去执行类的方法，其他的线程都要阻塞等待，直到这个线程执行完方法。然后执行完方法后，其他线程唤醒，但是不会再进入()方法。也就是说同一个加载器下，一个类型只会初始化一次。</p>
-<p>那么回到这个代码中，这里的静态变量的赋值操作进行编译之后实际上就是一个代码，当我们执行getInstance方法的时候，会导致Singleton4Holder类的加载，类加载的最后会执行类的初始化，但是即使在多线程情况下，这个类的初始化的代码也只会被执行一次，所以他只会有一个实例</p>
-<p>5.5 枚举单例</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span>  <span class="token class-name">Singleton5</span> <span class="token punctuation">&#123;</span>
-    INSTANCE<span class="token punctuation">;</span>
-
-
-   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-       
-   <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+                <h1 id="为什么要做启动优化"><a href="#为什么要做启动优化" class="headerlink" title="为什么要做启动优化"></a>为什么要做启动优化</h1><h2 id="1、第一体验很重要"><a href="#1、第一体验很重要" class="headerlink" title="1、第一体验很重要"></a>1、第一体验很重要</h2><h2 id="2、八秒定律：如果打开需要8秒钟那么用户就会放弃"><a href="#2、八秒定律：如果打开需要8秒钟那么用户就会放弃" class="headerlink" title="2、八秒定律：如果打开需要8秒钟那么用户就会放弃"></a>2、八秒定律：如果打开需要8秒钟那么用户就会放弃</h2><h1 id="冷启动是衡量的标准"><a href="#冷启动是衡量的标准" class="headerlink" title="冷启动是衡量的标准"></a>冷启动是衡量的标准</h1><p>冷启动流程<br>click-&gt;ipc-process.start-&gt;ActivityThread-&gt;bindApplication-&gt;LifeCycle-&gt;ViewRootImpl</p>
+<h2 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h2><p>Application和Activity 生命周期方法是优化的方向 其他的地方其实无法干预</p>
+<h2 id="adb命令获取启动时间"><a href="#adb命令获取启动时间" class="headerlink" title="adb命令获取启动时间"></a>adb命令获取启动时间</h2><p>adb shell am start -W packagename/首屏Activity</p>
+<pre class="line-numbers language-none"><code class="language-none">adb shell am start -W com.example.better&#x2F;.MainActivity
+Starting: Intent &#123; act&#x3D;android.intent.action.MAIN cat&#x3D;[android.intent.category.LAUNCHER] cmp&#x3D;com.example.better&#x2F;.MainActivity &#125;
+Status: ok
+Activity: com.example.better&#x2F;.MainActivity
+ThisTime: 364
+TotalTime: 364
+WaitTime: 374
+Complete
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>WaitTime 表示AMS启动Activity的总耗时</p>
+<p>TotalTime 表示所有Activity启动耗时</p>
+<p>ThisTime 表示最后一个Activity启动耗时</p>
+<h2 id="手动打点"><a href="#手动打点" class="headerlink" title="手动打点"></a>手动打点</h2><p>就是从开始时间到ui展示出来的时比如你从application 开始到View画出来时间</p>
+<p>比如创建一个类来负责记录时间</p>
+<pre class="line-numbers language-none"><code class="language-none">
+class LauncherTimer &#123;
+    private static long sTime;
+    public static void startRecord() &#123;
+        sTime &#x3D; System.currentTimeMillis();
+    &#125;
+    public static void endRecord() &#123;
+        long cost &#x3D; System.currentTimeMillis() - sTime;
+        Log.i(&quot;cost&quot;, &quot;endRecord: &quot; + cost);
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>需要注意的是，应该是View绘制出来作为结束时间,比如可以监听某个View绘制的时候作为结束时间</p>
+<pre class="line-numbers language-none"><code class="language-none">
+findViewById(R.id.text).getViewTreeObserver().addOnPreDrawListener(() -&gt; &#123;
+           LauncherTimer.endRecord();
+           return true;
+       &#125;);
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<p>优点：既能保证线程安全，又能保证兼顾性能，推荐使用</p>
-<p>为什么能保证线程的安全？<br>因为java在编译器变成class代码的时候枚举是一个静态变量类的加载过程中在初始化的时候会保证静态变量的线程安全加载。</p>
-<p>6.单例模式的优缺点<br>优点<br>1因为内存中只有创建一个实例，能减少内存的开销。<br>2.因为只有一个对象能减少对资源的占用，避免死锁等事情的发生。</p>
-<p>缺点：<br>1.单例模式容易引起内存泄露，因为他的生命周期比较长，注意传递最好传递Application Contenxt<br>2.单例模式没有接口，如果有逻辑修改或者扩展，那么只能改到代码，不符合高扩展性</p>
+<h2 id="工具选择"><a href="#工具选择" class="headerlink" title="工具选择"></a>工具选择</h2><h3 id="1、Traceview"><a href="#1、Traceview" class="headerlink" title="1、Traceview"></a>1、Traceview</h3><p>使用方式</p>
+<pre class="line-numbers language-none"><code class="language-none">Debug.startMethodTracing(&quot;app&quot;);
+
+Debug.stopMethodTracing();
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>它会在应用的目录上生成一个xx.trace 文件 通过Studio打开后可以发现大概长这样</p>
+<p><img src="/images/brace.png" alt="trace"></p>
+<p>上面滑动部分是你需要选中的时间范围</p>
+<p>中间部分会列出所有线程,还有每个做了什么事情，也就是方法调用栈<br>点击方法可以知道每个方法的耗时<br>total就是这个方法的耗时，<br>children 就是子方法的耗时<br>self 就是自己花费了多长时间<br>知道了这些就可以进行性能优化</p>
+<p>多关注TopDown就可以知道哪些方法耗时了</p>
+<p>这个工具比价适合去做开机启动优化，因为开始和结束已经埋在代码里面了。</p>
+<h3 id="2、systemtrace"><a href="#2、systemtrace" class="headerlink" title="2、systemtrace"></a>2、systemtrace</h3><p>这个应用更适合去做一下某些操作的卡顿</p>
+<p>使用方式</p>
+<pre class="line-numbers language-none"><code class="language-none">TraceCompat.beginSection(&quot;better&quot;);
+TraceCompat.endSection();
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>运行后执行</p>
+<pre class="line-numbers language-none"><code class="language-none">python &#x2F;Users&#x2F;weihuada&#x2F;Downloads&#x2F;platform-tools&#x2F;systrace&#x2F;systrace.py -b 32768 -t 5 -a com.example.better -o performance.html sched gfx view wm am app
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这个方法是 platform-tools里面自带的方法 </p>
+<p>这个方法在后续被google移除掉了<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/626eaebaa6a8">https://www.jianshu.com/p/626eaebaa6a8</a></p>
+<p>执行后会输出 performance.html 到当前目录</p>
+<p>然后通过浏览器 输入<br>chrome://tracing/<br>然后打开这个文件就可以了</p>
+<h2 id="启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件"><a href="#启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件" class="headerlink" title="启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件"></a>启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件</h2><p>但是要注意代码的执行先后顺序<br>有些代码是不能运行在异步线程的</p>
+<p>我们可以用CountDownLatch 这个类去处理代码的先后执行顺序的问题<br>我们可以比如开四条线程，最后100秒的主线程被分隔到4条线程中<br>每条线程最后就是25秒 用这个CountDownLatch 就是能先阻塞住<br>等到四条线程都处理完了再进行下面的操作 但是它不能解决不同线程之间的同步问题<br>为了解决线程之间的同步问题 我们可以引入线程执行器这里就不展示具体代码。 </p>
+<h2 id="将不重要的操作放到ui展示出来之后再初始化。"><a href="#将不重要的操作放到ui展示出来之后再初始化。" class="headerlink" title="将不重要的操作放到ui展示出来之后再初始化。"></a>将不重要的操作放到ui展示出来之后再初始化。</h2><h2 id="优化总方针"><a href="#优化总方针" class="headerlink" title="优化总方针"></a>优化总方针</h2><p>异步、延迟、懒加载</p>
+<h2 id="其他黑科技"><a href="#其他黑科技" class="headerlink" title="其他黑科技"></a>其他黑科技</h2><p>启动时抑制GC</p>
+<p>CPU锁频</p>
 
                 
             </div>
@@ -587,8 +543,8 @@ client --&gt;Singletion
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
+                                <a href="/tags/Android%E5%BC%80%E5%8F%91/">
+                                    <span class="chip bg-color">Android开发</span>
                                 </a>
                             
                         </div>
@@ -757,17 +713,18 @@ client --&gt;Singletion
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2021/01/30/%E7%BC%96%E5%86%99%E5%8F%AF%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E8%89%BA%E6%9C%AF/">
+                <a href="/2022/01/30/%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="读书笔记--编写可读代码的艺术">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="启动优化">
                         
-                        <span class="card-title">读书笔记--编写可读代码的艺术</span>
+                        <span class="card-title">启动优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -777,9 +734,59 @@ client --&gt;Singletion
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-30
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
+                                    性能优化
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">Android开发</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/01/02/PlantUML/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="PlantUML">
+                        
+                        <span class="card-title">PlantUML</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -795,58 +802,8 @@ client --&gt;Singletion
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
-                        <span class="chip bg-color">读书笔记</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Current&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/01/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="设计模式之单例模式">
-                        
-                        <span class="card-title">设计模式之单例模式</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-22
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" class="post-category">
-                                    代码设计
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                        <span class="chip bg-color">日常积累</span>
                     </a>
                     
                 </div>

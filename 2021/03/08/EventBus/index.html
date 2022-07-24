@@ -120,7 +120,7 @@
   
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
     </a>
   </li>
 </ul>
@@ -434,7 +434,7 @@
             <div class="post-info">
                 
                 <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
                     2021-03-08
                 </div>
                 
@@ -459,92 +459,199 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>EventBus作为一款事件发布的第三方开源框架，几乎是每个项目都会使用到，使用它可以对Fragment和Fragment之间 Activity和Activity之间，不同组件之间信息交互变得便捷，减少耦合性上有非常显著的效果，为了搞清楚EventBus 这个Android开发中国民级的开源组件源码，我们来看一下源码是怎么写的</p>
-<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><pre class="line-numbers language-none"><code class="language-none">implementation &#39;org.greenrobot:eventbus:3.0.0&#39;
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h2 id="EventBus作为一款事件发布的第三方开源框架，几乎是每个项目都会使用到，使用它可以对Fragment和Fragment之间-Activity和Activity之间，不同组件之间信息交互变得便捷，减少耦合性上有非常显著的效果，为了搞清楚EventBus-这个Android开发中国民级的开源组件源码，我们来看一下源码是怎么写的"><a href="#EventBus作为一款事件发布的第三方开源框架，几乎是每个项目都会使用到，使用它可以对Fragment和Fragment之间-Activity和Activity之间，不同组件之间信息交互变得便捷，减少耦合性上有非常显著的效果，为了搞清楚EventBus-这个Android开发中国民级的开源组件源码，我们来看一下源码是怎么写的" class="headerlink" title="EventBus作为一款事件发布的第三方开源框架，几乎是每个项目都会使用到，使用它可以对Fragment和Fragment之间 Activity和Activity之间，不同组件之间信息交互变得便捷，减少耦合性上有非常显著的效果，为了搞清楚EventBus 这个Android开发中国民级的开源组件源码，我们来看一下源码是怎么写的"></a>EventBus作为一款事件发布的第三方开源框架，几乎是每个项目都会使用到，使用它可以对Fragment和Fragment之间 Activity和Activity之间，不同组件之间信息交互变得便捷，减少耦合性上有非常显著的效果，为了搞清楚EventBus 这个Android开发中国民级的开源组件源码，我们来看一下源码是怎么写的</h2><p>title: 启动优化<br>date: 2022-01-30<br>categories: 性能优化<br>tags: Android开发 </p>
+<hr>
+<h1 id="为什么要做启动优化"><a href="#为什么要做启动优化" class="headerlink" title="为什么要做启动优化"></a>为什么要做启动优化</h1><h2 id="1、第一体验很重要"><a href="#1、第一体验很重要" class="headerlink" title="1、第一体验很重要"></a>1、第一体验很重要</h2><h2 id="2、八秒定律：如果打开需要8秒钟那么用户就会放弃"><a href="#2、八秒定律：如果打开需要8秒钟那么用户就会放弃" class="headerlink" title="2、八秒定律：如果打开需要8秒钟那么用户就会放弃"></a>2、八秒定律：如果打开需要8秒钟那么用户就会放弃</h2><h1 id="冷启动是衡量的标准"><a href="#冷启动是衡量的标准" class="headerlink" title="冷启动是衡量的标准"></a>冷启动是衡量的标准</h1><p>冷启动流程<br>click-&gt;ipc-process.start-&gt;ActivityThread-&gt;bindApplication-&gt;LifeCycle-&gt;ViewRootImpl</p>
+<h2 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h2><p>Application和Activity 生命周期方法是优化的方向 其他的地方其实无法干预</p>
+<h2 id="adb命令获取启动时间"><a href="#adb命令获取启动时间" class="headerlink" title="adb命令获取启动时间"></a>adb命令获取启动时间</h2><p>adb shell am start -W packagename/首屏Activity</p>
+<pre class="line-numbers language-none"><code class="language-none">adb shell am start -W com.example.better&#x2F;.MainActivity
+Starting: Intent &#123; act&#x3D;android.intent.action.MAIN cat&#x3D;[android.intent.category.LAUNCHER] cmp&#x3D;com.example.better&#x2F;.MainActivity &#125;
+Status: ok
+Activity: com.example.better&#x2F;.MainActivity
+ThisTime: 364
+TotalTime: 364
+WaitTime: 374
+Complete<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>WaitTime 表示AMS启动Activity的总耗时</p>
+<p>TotalTime 表示所有Activity启动耗时</p>
+<p>ThisTime 表示最后一个Activity启动耗时</p>
+<h2 id="手动打点"><a href="#手动打点" class="headerlink" title="手动打点"></a>手动打点</h2><p>就是从开始时间到ui展示出来的时比如你从application 开始到View画出来时间</p>
+<p>比如创建一个类来负责记录时间</p>
+<pre class="line-numbers language-none"><code class="language-none">class LauncherTimer &#123;
+    private static long sTime;
+    public static void startRecord() &#123;
+        sTime &#x3D; System.currentTimeMillis();
+    &#125;
+    public static void endRecord() &#123;
+        long cost &#x3D; System.currentTimeMillis() - sTime;
+        Log.i(&quot;cost&quot;, &quot;endRecord: &quot; + cost);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在回调方法中加入注册和反注册功能，然后在方法中加入注解</p>
-<pre class="line-numbers language-none"><code class="language-none">@Override
-  protected void onStart() &#123;
-      super.onStart();
-      EventBus.getDefault().register(this);
-  &#125;
+<p>需要注意的是，应该是View绘制出来作为结束时间,比如可以监听某个View绘制的时候作为结束时间</p>
+<pre class="line-numbers language-none"><code class="language-none">findViewById(R.id.text).getViewTreeObserver().addOnPreDrawListener(() -&gt; &#123;
+           LauncherTimer.endRecord();
+           return true;
+       &#125;);
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
+<h2 id="工具选择"><a href="#工具选择" class="headerlink" title="工具选择"></a>工具选择</h2><h3 id="1、traceview"><a href="#1、traceview" class="headerlink" title="1、traceview"></a>1、traceview</h3><p>使用方式</p>
+<pre><code>Debug.startMethodTracing(&quot;app&quot;);
+
+Debug.stopMethodTracing();
+
+
+<pre class="line-numbers language-none"><code class="language-none">
+它会在应用的目录上生成一个xx.trace 文件 通过Studio打开后可以发现大概长这样
+
+![trace](&#x2F;images&#x2F;trace.png)
+
+上面滑动部分是你需要选中的时间范围
+
+中间部分会列出所有线程,还有每个做了什么事情，也就是方法调用栈
+点击方法可以知道每个方法的耗时
+total就是这个方法的耗时，
+children 就是子方法的耗时
+self 就是自己花费了多长时间
+知道了这些就可以进行性能优化
+
+多关注TopDown就可以知道哪些方法耗时了
+
+
+### 2、systemtrace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 基础使用
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    implementation &#39;org.greenrobot:eventbus:3.0.0&#39;
+
+<pre class="line-numbers language-none"><code class="language-none">
+在回调方法中加入注册和反注册功能，然后在方法中加入注解
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
   @Override
-  protected void onStop() &#123;
-      super.onStop();
-      EventBus.getDefault().unregister(this);
-  &#125;
+    protected void onStart() &#123;
+        super.onStart();
+        EventBus.getDefault().register(this);
+    &#125;
 
 
-  @Subscribe(threadMode &#x3D; ThreadMode.MAIN)
-  public void onmessage(MyBusEvent event) &#123;
-        Toast.makeText(this, event, Toast.LENGTH_SHORT).show();
-  &#125;
+    @Override
+    protected void onStop() &#123;
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onmessage(MyBusEvent event) &#123;
+          Toast.makeText(this, event, Toast.LENGTH_SHORT).show();
+    &#125;
 
 
-<p>最后一步就是在任意地方发送一个广播</p>
-<pre class="line-numbers language-none"><code class="language-none">public void postEvent() &#123;
+<pre class="line-numbers language-none"><code class="language-none">
+
+最后一步就是在任意地方发送一个广播
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+public void postEvent() &#123;
         EventBus.getDefault().post(new MyBusEvent(&quot;hhh&quot;));
     &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">
 
 
+## 源码解析
 
-<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><p>我们先看第一句 EventBus.getDefault()到底做了什么</p>
-<pre class="line-numbers language-none"><code class="language-none">public static EventBus getDefault() &#123;
-        if (defaultInstance &#x3D;&#x3D; null) &#123;
+
+我们先看第一句 EventBus.getDefault()到底做了什么
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+public static EventBus getDefault() &#123;
+        if (defaultInstance == null) &#123;
             synchronized (EventBus.class) &#123;
-                if (defaultInstance &#x3D;&#x3D; null) &#123;
-                    defaultInstance &#x3D; new EventBus();
+                if (defaultInstance == null) &#123;
+                    defaultInstance = new EventBus();
                 &#125;
             &#125;
         &#125;
         return defaultInstance;
     &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>非常明显是做了一个双层锁的单例模式我们来看一下new EventBus构造方法</p>
-<pre class="line-numbers language-none"><code class="language-none">public EventBus() &#123;
-       this(DEFAULT_BUILDER);
-   &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">
+非常明显是做了一个双层锁的单例模式我们来看一下new EventBus构造方法
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+ public EventBus() &#123;
+        this(DEFAULT_BUILDER);
+    &#125;
+
+<pre class="line-numbers language-none"><code class="language-none">
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+private static final EventBusBuilder DEFAULT_BUILDER = new EventBusBuilder();
 
 
 <pre class="line-numbers language-none"><code class="language-none">
-private static final EventBusBuilder DEFAULT_BUILDER &#x3D; new EventBusBuilder();
+调用了一个参数的构造方法传入了一个变量这这个变量就是它EventBusBuilder 所以其实是一个建造者模式，我们看一下EventBusBuilder和传参数的构造方法
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>调用了一个参数的构造方法传入了一个变量这这个变量就是它EventBusBuilder 所以其实是一个建造者模式，我们看一下EventBusBuilder和传参数的构造方法</p>
-<pre class="line-numbers language-none"><code class="language-none"> 
-EventBus(EventBusBuilder builder) &#123;
-      subscriptionsByEventType &#x3D; new HashMap&lt;&gt;();
-      typesBySubscriber &#x3D; new HashMap&lt;&gt;();
-      stickyEvents &#x3D; new ConcurrentHashMap&lt;&gt;();
-      mainThreadPoster &#x3D; new HandlerPoster(this, Looper.getMainLooper(), 10);
-      backgroundPoster &#x3D; new BackgroundPoster(this);
-      asyncPoster &#x3D; new AsyncPoster(this);
-      indexCount &#x3D; builder.subscriberInfoIndexes !&#x3D; null ? builder.subscriberInfoIndexes.size() : 0;
-      subscriberMethodFinder &#x3D; new SubscriberMethodFinder(builder.subscriberInfoIndexes,
-              builder.strictMethodVerification, builder.ignoreGeneratedIndex);
-      logSubscriberExceptions &#x3D; builder.logSubscriberExceptions;
-      logNoSubscriberMessages &#x3D; builder.logNoSubscriberMessages;
-      sendSubscriberExceptionEvent &#x3D; builder.sendSubscriberExceptionEvent;
-      sendNoSubscriberEvent &#x3D; builder.sendNoSubscriberEvent;
-      throwSubscriberException &#x3D; builder.throwSubscriberException;
-      eventInheritance &#x3D; builder.eventInheritance;
-      executorService &#x3D; builder.executorService;
-  &#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+ 
+  EventBus(EventBusBuilder builder) &#123;
+        subscriptionsByEventType = new HashMap&lt;&gt;();
+        typesBySubscriber = new HashMap&lt;&gt;();
+        stickyEvents = new ConcurrentHashMap&lt;&gt;();
+        mainThreadPoster = new HandlerPoster(this, Looper.getMainLooper(), 10);
+        backgroundPoster = new BackgroundPoster(this);
+        asyncPoster = new AsyncPoster(this);
+        indexCount = builder.subscriberInfoIndexes != null ? builder.subscriberInfoIndexes.size() : 0;
+        subscriberMethodFinder = new SubscriberMethodFinder(builder.subscriberInfoIndexes,
+                builder.strictMethodVerification, builder.ignoreGeneratedIndex);
+        logSubscriberExceptions = builder.logSubscriberExceptions;
+        logNoSubscriberMessages = builder.logNoSubscriberMessages;
+        sendSubscriberExceptionEvent = builder.sendSubscriberExceptionEvent;
+        sendNoSubscriberEvent = builder.sendNoSubscriberEvent;
+        throwSubscriberException = builder.throwSubscriberException;
+        eventInheritance = builder.eventInheritance;
+        executorService = builder.executorService;
+    &#125;
 
-  
-  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>可以看到做了很多的初始化操作subscriptionsByEventType 这个是以发送的对象为key subscrption为value的一个hashmap typesBySubscriber这个是一个以subscrption为key发送对象为value的一个hashmap<br>stickyEvents 是一个粘性事件 map<br>HandlerPoster是一个继承Handler的调度器 我们有必要看一下这个类的代码</p>
+    
+    
 <pre class="line-numbers language-none"><code class="language-none">
+可以看到做了很多的初始化操作subscriptionsByEventType 这个是以发送的对象为key subscrption为value的一个hashmap typesBySubscriber这个是一个以subscrption为key发送对象为value的一个hashmap
+stickyEvents 是一个粘性事件 map
+HandlerPoster是一个继承Handler的调度器 我们有必要看一下这个类的代码
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 final class HandlerPoster extends Handler &#123;
 
     private final PendingPostQueue queue;
@@ -554,17 +661,17 @@ final class HandlerPoster extends Handler &#123;
 
     HandlerPoster(EventBus eventBus, Looper looper, int maxMillisInsideHandleMessage) &#123;
         super(looper);
-        this.eventBus &#x3D; eventBus;
-        this.maxMillisInsideHandleMessage &#x3D; maxMillisInsideHandleMessage;
-        queue &#x3D; new PendingPostQueue();
+        this.eventBus = eventBus;
+        this.maxMillisInsideHandleMessage = maxMillisInsideHandleMessage;
+        queue = new PendingPostQueue();
     &#125;
 
     void enqueue(Subscription subscription, Object event) &#123;
-        PendingPost pendingPost &#x3D; PendingPost.obtainPendingPost(subscription, event);
+        PendingPost pendingPost = PendingPost.obtainPendingPost(subscription, event);
         synchronized (this) &#123;
             queue.enqueue(pendingPost);
             if (!handlerActive) &#123;
-                handlerActive &#x3D; true;
+                handlerActive = true;
                 if (!sendMessage(obtainMessage())) &#123;
                     throw new EventBusException(&quot;Could not send handler message&quot;);
                 &#125;
@@ -574,55 +681,59 @@ final class HandlerPoster extends Handler &#123;
 
     @Override
     public void handleMessage(Message msg) &#123;
-        boolean rescheduled &#x3D; false;
+        boolean rescheduled = false;
         try &#123;
-            long started &#x3D; SystemClock.uptimeMillis();
+            long started = SystemClock.uptimeMillis();
             while (true) &#123;
-                PendingPost pendingPost &#x3D; queue.poll();
-                if (pendingPost &#x3D;&#x3D; null) &#123;
+                PendingPost pendingPost = queue.poll();
+                if (pendingPost == null) &#123;
                     synchronized (this) &#123;
-                        &#x2F;&#x2F; Check again, this time in synchronized
-                        pendingPost &#x3D; queue.poll();
-                        if (pendingPost &#x3D;&#x3D; null) &#123;
-                            handlerActive &#x3D; false;
+                        // Check again, this time in synchronized
+                        pendingPost = queue.poll();
+                        if (pendingPost == null) &#123;
+                            handlerActive = false;
                             return;
                         &#125;
                     &#125;
                 &#125;
                 eventBus.invokeSubscriber(pendingPost);
-                long timeInMethod &#x3D; SystemClock.uptimeMillis() - started;
-                if (timeInMethod &gt;&#x3D; maxMillisInsideHandleMessage) &#123;
+                long timeInMethod = SystemClock.uptimeMillis() - started;
+                if (timeInMethod &gt;= maxMillisInsideHandleMessage) &#123;
                     if (!sendMessage(obtainMessage())) &#123;
                         throw new EventBusException(&quot;Could not send handler message&quot;);
                     &#125;
-                    rescheduled &#x3D; true;
+                    rescheduled = true;
                     return;
                 &#125;
             &#125;
         &#125; finally &#123;
-            handlerActive &#x3D; rescheduled;
+            handlerActive = rescheduled;
         &#125;
     &#125;
 &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-<p>我们可以看到PendingPostQueue是一个即将发送的消息队列，handlerActive是这个eventBus有没有运行起来，我们看一下他的handleMessage方法 ，其实就是从队列中拿到一个即将发送的消息，然后就是调用invokeSubscriber方法</p>
 <pre class="line-numbers language-none"><code class="language-none">
-void invokeSubscriber(PendingPost pendingPost) &#123;
-       Object event &#x3D; pendingPost.event;
-       Subscription subscription &#x3D; pendingPost.subscription;
-       PendingPost.releasePendingPost(pendingPost);
-       if (subscription.active) &#123;
-           invokeSubscriber(subscription, event);
-       &#125;
-   &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+我们可以看到PendingPostQueue是一个即将发送的消息队列，handlerActive是这个eventBus有没有运行起来，我们看一下他的handleMessage方法 ，其实就是从队列中拿到一个即将发送的消息，然后就是调用invokeSubscriber方法
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>我们回到EventBus的一个参数的构造方法从HandlerPoster继续往下看下去，我们看到了BackgroundPoster这个分发器我们看一下源码</p>
+ void invokeSubscriber(PendingPost pendingPost) &#123;
+        Object event = pendingPost.event;
+        Subscription subscription = pendingPost.subscription;
+        PendingPost.releasePendingPost(pendingPost);
+        if (subscription.active) &#123;
+            invokeSubscriber(subscription, event);
+        &#125;
+    &#125;
+
+
 <pre class="line-numbers language-none"><code class="language-none">
+我们回到EventBus的一个参数的构造方法从HandlerPoster继续往下看下去，我们看到了BackgroundPoster这个分发器我们看一下源码
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 
 final class BackgroundPoster implements Runnable &#123;
 
@@ -632,16 +743,16 @@ final class BackgroundPoster implements Runnable &#123;
     private volatile boolean executorRunning;
 
     BackgroundPoster(EventBus eventBus) &#123;
-        this.eventBus &#x3D; eventBus;
-        queue &#x3D; new PendingPostQueue();
+        this.eventBus = eventBus;
+        queue = new PendingPostQueue();
     &#125;
 
     public void enqueue(Subscription subscription, Object event) &#123;
-        PendingPost pendingPost &#x3D; PendingPost.obtainPendingPost(subscription, event);
+        PendingPost pendingPost = PendingPost.obtainPendingPost(subscription, event);
         synchronized (this) &#123;
             queue.enqueue(pendingPost);
             if (!executorRunning) &#123;
-                executorRunning &#x3D; true;
+                executorRunning = true;
                 eventBus.getExecutorService().execute(this);
             &#125;
         &#125;
@@ -652,13 +763,13 @@ final class BackgroundPoster implements Runnable &#123;
         try &#123;
             try &#123;
                 while (true) &#123;
-                    PendingPost pendingPost &#x3D; queue.poll(1000);
-                    if (pendingPost &#x3D;&#x3D; null) &#123;
+                    PendingPost pendingPost = queue.poll(1000);
+                    if (pendingPost == null) &#123;
                         synchronized (this) &#123;
-                            &#x2F;&#x2F; Check again, this time in synchronized
-                            pendingPost &#x3D; queue.poll();
-                            if (pendingPost &#x3D;&#x3D; null) &#123;
-                                executorRunning &#x3D; false;
+                            // Check again, this time in synchronized
+                            pendingPost = queue.poll();
+                            if (pendingPost == null) &#123;
+                                executorRunning = false;
                                 return;
                             &#125;
                         &#125;
@@ -669,36 +780,48 @@ final class BackgroundPoster implements Runnable &#123;
                 Log.w(&quot;Event&quot;, Thread.currentThread().getName() + &quot; was interruppted&quot;, e);
             &#125;
         &#125; finally &#123;
-            executorRunning &#x3D; false;
+            executorRunning = false;
         &#125;
     &#125;
 
 &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+其实就是一个线程 我们看run方法，其实跟前面是的HandlerPoster类似就是将事件调用invokeSubscriber方法通过反射去执行，这里就不再多说了，我们继续看AsyncPoster 这个类,其实这个类跟上面的类似，只不过它是拿到一个进行反射调用
 
 
-<p>其实就是一个线程 我们看run方法，其实跟前面是的HandlerPoster类似就是将事件调用invokeSubscriber方法通过反射去执行，这里就不再多说了，我们继续看AsyncPoster 这个类,其实这个类跟上面的类似，只不过它是拿到一个进行反射调用</p>
-<pre class="line-numbers language-none"><code class="language-none">class AsyncPoster implements Runnable &#123;
+
+
+
+
+
+
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+class AsyncPoster implements Runnable &#123;
 
     private final PendingPostQueue queue;
     private final EventBus eventBus;
 
     AsyncPoster(EventBus eventBus) &#123;
-        this.eventBus &#x3D; eventBus;
-        queue &#x3D; new PendingPostQueue();
+        this.eventBus = eventBus;
+        queue = new PendingPostQueue();
     &#125;
 
     public void enqueue(Subscription subscription, Object event) &#123;
-        PendingPost pendingPost &#x3D; PendingPost.obtainPendingPost(subscription, event);
+        PendingPost pendingPost = PendingPost.obtainPendingPost(subscription, event);
         queue.enqueue(pendingPost);
         eventBus.getExecutorService().execute(this);
     &#125;
 
     @Override
     public void run() &#123;
-        PendingPost pendingPost &#x3D; queue.poll();
-        if(pendingPost &#x3D;&#x3D; null) &#123;
+        PendingPost pendingPost = queue.poll();
+        if(pendingPost == null) &#123;
             throw new IllegalStateException(&quot;No pending post available&quot;);
         &#125;
         eventBus.invokeSubscriber(pendingPost);
@@ -708,10 +831,19 @@ final class BackgroundPoster implements Runnable &#123;
 
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>我们继续看subscriberMethodFinder这个是一个方法找寻器，这个就是通过它来找寻有subscribe的方法，我们再后面再详细介绍这个类<br>后面像各种logSubscriberExceptions等异常 我们就不深入介绍了，我们主要介绍主流程，不考虑很多异常情况，我们走主流程<br>接下里我们先来看一下注解</p>
-<pre class="line-numbers language-none"><code class="language-none">@Documented
+<pre class="line-numbers language-none"><code class="language-none">
+我们继续看subscriberMethodFinder这个是一个方法找寻器，这个就是通过它来找寻有subscribe的方法，我们再后面再详细介绍这个类
+后面像各种logSubscriberExceptions等异常 我们就不深入介绍了，我们主要介绍主流程，不考虑很多异常情况，我们走主流程
+接下里我们先来看一下注解
+
+
+
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(&#123;ElementType.METHOD&#125;)
 public @interface Subscribe &#123;
@@ -727,60 +859,79 @@ public enum ThreadMode &#123;
     BACKGROUND,
     ASYNC
 &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-<p>我们看到注解后面有线程类型 ，是否是粘性事件，优先级，我们来看一下ThreadMode的种类，有几种 POSTING是默认类型，MAIN是主线程类型BACKGROUND是起一个线程来发送事件 ASYNC是一个事件类型就是起一个线程来发送事件<br>我们接下来看完注解 我们看一下register这个方法传入当前对象，我们直接看源码</p>
 <pre class="line-numbers language-none"><code class="language-none">
-public void register(Object subscriber) &#123;
-      Class&lt;?&gt; subscriberClass &#x3D; subscriber.getClass();
-      List&lt;SubscriberMethod&gt; subscriberMethods &#x3D; subscriberMethodFinder.findSubscriberMethods(subscriberClass);
-      synchronized (this) &#123;
-          for (SubscriberMethod subscriberMethod : subscriberMethods) &#123;
-              subscribe(subscriber, subscriberMethod);
-          &#125;
-      &#125;
-  &#125;
+
+我们看到注解后面有线程类型 ，是否是粘性事件，优先级，我们来看一下ThreadMode的种类，有几种 POSTING是默认类型，MAIN是主线程类型BACKGROUND是起一个线程来发送事件 ASYNC是一个事件类型就是起一个线程来发送事件
+我们接下来看完注解 我们看一下register这个方法传入当前对象，我们直接看源码
+
+
+
+
+
+
 
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+  public void register(Object subscriber) &#123;
+        Class&lt;?&gt; subscriberClass = subscriber.getClass();
+        List&lt;SubscriberMethod&gt; subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass);
+        synchronized (this) &#123;
+            for (SubscriberMethod subscriberMethod : subscriberMethods) &#123;
+                subscribe(subscriber, subscriberMethod);
+            &#125;
+        &#125;
+    &#125;
+
+
+
+<pre class="line-numbers language-none"><code class="language-none">
 
 
 
 
-<p>我们看到它通过subscriberMethodFinder.findSubscriberMethods(subscriberClass);这个方法找到了一个方法集合我们看一下SubscriberMethod这个封装类先</p>
-<pre class="line-numbers language-none"><code class="language-none">public class SubscriberMethod &#123;
+我们看到它通过subscriberMethodFinder.findSubscriberMethods(subscriberClass);这个方法找到了一个方法集合我们看一下SubscriberMethod这个封装类先
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+public class SubscriberMethod &#123;
     final Method method;
     final ThreadMode threadMode;
     final Class&lt;?&gt; eventType;
     final int priority;
     final boolean sticky;
-    &#x2F;** Used for efficient comparison *&#x2F;
+    /** Used for efficient comparison */
     String methodString;
 
     public SubscriberMethod(Method method, Class&lt;?&gt; eventType, ThreadMode threadMode, int priority, boolean sticky) &#123;
-        this.method &#x3D; method;
-        this.threadMode &#x3D; threadMode;
-        this.eventType &#x3D; eventType;
-        this.priority &#x3D; priority;
-        this.sticky &#x3D; sticky;
+        this.method = method;
+        this.threadMode = threadMode;
+        this.eventType = eventType;
+        this.priority = priority;
+        this.sticky = sticky;
     &#125;
 &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>其实就是把这个方法注解类型给封装起来包括优先级，是否粘性，线程模式，属于哪个类的<br>我们回到 subscriberMethodFinder.findSubscriberMethods(subscriberClass)这个方法是怎么找的</p>
-<pre class="line-numbers language-none"><code class="language-none">List&lt;SubscriberMethod&gt; findSubscriberMethods(Class&lt;?&gt; subscriberClass) &#123;
-        List&lt;SubscriberMethod&gt; subscriberMethods &#x3D; METHOD_CACHE.get(subscriberClass);
-        if (subscriberMethods !&#x3D; null) &#123;
+<pre class="line-numbers language-none"><code class="language-none">
+其实就是把这个方法注解类型给封装起来包括优先级，是否粘性，线程模式，属于哪个类的
+我们回到 subscriberMethodFinder.findSubscriberMethods(subscriberClass)这个方法是怎么找的
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+List&lt;SubscriberMethod&gt; findSubscriberMethods(Class&lt;?&gt; subscriberClass) &#123;
+        List&lt;SubscriberMethod&gt; subscriberMethods = METHOD_CACHE.get(subscriberClass);
+        if (subscriberMethods != null) &#123;
             return subscriberMethods;
         &#125;
 
         if (ignoreGeneratedIndex) &#123;
-            subscriberMethods &#x3D; findUsingReflection(subscriberClass);
+            subscriberMethods = findUsingReflection(subscriberClass);
         &#125; else &#123;
-            subscriberMethods &#x3D; findUsingInfo(subscriberClass);
+            subscriberMethods = findUsingInfo(subscriberClass);
         &#125;
         if (subscriberMethods.isEmpty()) &#123;
             throw new EventBusException(&quot;Subscriber &quot; + subscriberClass
@@ -791,18 +942,22 @@ public void register(Object subscriber) &#123;
         &#125;
     &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-<p>先进行缓存的判断如果缓存有的话那么直接返回回去，如果缓存没有的话调用findUsingInfo方法去找我们跟到findUsingInfo中去看</p>
 <pre class="line-numbers language-none"><code class="language-none">
+
+先进行缓存的判断如果缓存有的话那么直接返回回去，如果缓存没有的话调用findUsingInfo方法去找我们跟到findUsingInfo中去看
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 private List&lt;SubscriberMethod&gt; findUsingInfo(Class&lt;?&gt; subscriberClass) &#123;
-        FindState findState &#x3D; prepareFindState();
+        FindState findState = prepareFindState();
         findState.initForSubscriber(subscriberClass);
-        while (findState.clazz !&#x3D; null) &#123;
-            findState.subscriberInfo &#x3D; getSubscriberInfo(findState);
-            if (findState.subscriberInfo !&#x3D; null) &#123;
-                SubscriberMethod[] array &#x3D; findState.subscriberInfo.getSubscriberMethods();
+        while (findState.clazz != null) &#123;
+            findState.subscriberInfo = getSubscriberInfo(findState);
+            if (findState.subscriberInfo != null) &#123;
+                SubscriberMethod[] array = findState.subscriberInfo.getSubscriberMethods();
                 for (SubscriberMethod subscriberMethod : array) &#123;
                     if (findState.checkAdd(subscriberMethod.method, subscriberMethod.eventType)) &#123;
                         findState.subscriberMethods.add(subscriberMethod);
@@ -817,30 +972,41 @@ private List&lt;SubscriberMethod&gt; findUsingInfo(Class&lt;?&gt; subscriberClas
     &#125;
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-
-<p>我们先看一下FindState这个类 这个类里面有几个重要的列表和map有方法的集合，有方法为value 方法的参数对象为key的map 有方法为key订阅对象为value的map</p>
 <pre class="line-numbers language-none"><code class="language-none">
 
-final List&lt;SubscriberMethod&gt; subscriberMethods &#x3D; new ArrayList&lt;&gt;();
-       final Map&lt;Class, Object&gt; anyMethodByEventType &#x3D; new HashMap&lt;&gt;();
-       final Map&lt;String, Class&gt; subscriberClassByMethodKey &#x3D; new HashMap&lt;&gt;();
-       final StringBuilder methodKeyBuilder &#x3D; new StringBuilder(128);
+
+
+我们先看一下FindState这个类 这个类里面有几个重要的列表和map有方法的集合，有方法为value 方法的参数对象为key的map 有方法为key订阅对象为value的map
+
+
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+ final List&lt;SubscriberMethod&gt; subscriberMethods = new ArrayList&lt;&gt;();
+        final Map&lt;Class, Object&gt; anyMethodByEventType = new HashMap&lt;&gt;();
+        final Map&lt;String, Class&gt; subscriberClassByMethodKey = new HashMap&lt;&gt;();
+        final StringBuilder methodKeyBuilder = new StringBuilder(128);
+
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+我们回到前面prepareFindState这方法是从池子中看能不能找到一样的，可以就复用 不可以就创建一个然后调用initForSubscriber这个方法这个方法其实是一些简单赋值操作我们看源码
+
+
+
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<p>我们回到前面prepareFindState这方法是从池子中看能不能找到一样的，可以就复用 不可以就创建一个然后调用initForSubscriber这个方法这个方法其实是一些简单赋值操作我们看源码</p>
-<pre class="line-numbers language-none"><code class="language-none">private List&lt;SubscriberMethod&gt; findUsingInfo(Class&lt;?&gt; subscriberClass) &#123;
-        FindState findState &#x3D; prepareFindState();
+private List&lt;SubscriberMethod&gt; findUsingInfo(Class&lt;?&gt; subscriberClass) &#123;
+        FindState findState = prepareFindState();
         findState.initForSubscriber(subscriberClass);
-        while (findState.clazz !&#x3D; null) &#123;
-            findState.subscriberInfo &#x3D; getSubscriberInfo(findState);
-            if (findState.subscriberInfo !&#x3D; null) &#123;
-                SubscriberMethod[] array &#x3D; findState.subscriberInfo.getSubscriberMethods();
+        while (findState.clazz != null) &#123;
+            findState.subscriberInfo = getSubscriberInfo(findState);
+            if (findState.subscriberInfo != null) &#123;
+                SubscriberMethod[] array = findState.subscriberInfo.getSubscriberMethods();
                 for (SubscriberMethod subscriberMethod : array) &#123;
                     if (findState.checkAdd(subscriberMethod.method, subscriberMethod.eventType)) &#123;
                         findState.subscriberMethods.add(subscriberMethod);
@@ -854,220 +1020,241 @@ final List&lt;SubscriberMethod&gt; subscriberMethods &#x3D; new ArrayList&lt;&gt
         return getMethodsAndRelease(findState);
     &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-<p>其实大部分的情况下都会走到findUsingReflectionInSingleClass这个方法，这个才是解析注解方法的核心,我们看一下源码</p>
-<pre class="line-numbers language-none"><code class="language-none">
-private void findUsingReflectionInSingleClass(FindState findState) &#123;
-       Method[] methods;
-       try &#123;
-           &#x2F;&#x2F; This is faster than getMethods, especially when subscribers are fat classes like Activities
-           methods &#x3D; findState.clazz.getDeclaredMethods();
-       &#125; catch (Throwable th) &#123;
-           &#x2F;&#x2F; Workaround for java.lang.NoClassDefFoundError, see https:&#x2F;&#x2F;github.com&#x2F;greenrobot&#x2F;EventBus&#x2F;issues&#x2F;149
-           methods &#x3D; findState.clazz.getMethods();
-           findState.skipSuperClasses &#x3D; true;
-       &#125;
-       for (Method method : methods) &#123;
-           int modifiers &#x3D; method.getModifiers();
-           if ((modifiers &amp; Modifier.PUBLIC) !&#x3D; 0 &amp;&amp; (modifiers &amp; MODIFIERS_IGNORE) &#x3D;&#x3D; 0) &#123;
-               Class&lt;?&gt;[] parameterTypes &#x3D; method.getParameterTypes();
-               if (parameterTypes.length &#x3D;&#x3D; 1) &#123;
-                   Subscribe subscribeAnnotation &#x3D; method.getAnnotation(Subscribe.class);
-                   if (subscribeAnnotation !&#x3D; null) &#123;
-                       Class&lt;?&gt; eventType &#x3D; parameterTypes[0];
-                       if (findState.checkAdd(method, eventType)) &#123;
-                           ThreadMode threadMode &#x3D; subscribeAnnotation.threadMode();
-                           findState.subscriberMethods.add(new SubscriberMethod(method, eventType, threadMode,
-                                   subscribeAnnotation.priority(), subscribeAnnotation.sticky()));
-                       &#125;
-                   &#125;
-               &#125; else if (strictMethodVerification &amp;&amp; method.isAnnotationPresent(Subscribe.class)) &#123;
-                   String methodName &#x3D; method.getDeclaringClass().getName() + &quot;.&quot; + method.getName();
-                   throw new EventBusException(&quot;@Subscribe method &quot; + methodName +
-                           &quot;must have exactly 1 parameter but has &quot; + parameterTypes.length);
-               &#125;
-           &#125; else if (strictMethodVerification &amp;&amp; method.isAnnotationPresent(Subscribe.class)) &#123;
-               String methodName &#x3D; method.getDeclaringClass().getName() + &quot;.&quot; + method.getName();
-               throw new EventBusException(methodName +
-                       &quot; is a illegal @Subscribe method: must be public, non-static, and non-abstract&quot;);
-           &#125;
-       &#125;
-   &#125;
-
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-
-<p>首先通过findState的有一个订阅者的类反射拿到所有方法，对所有方法进行遍历，对每个方法进行遍历方法必须为PUBLIC，参数长度必须为1，然后必须有Subscribe这个注解获取方法的线程模式，是否是粘性事件，权重大小等 加入到findState的 subscriberMethods就是方法集合，最后返回方法集合，subscriberMethods这个类已经在上面详细讲解了，其实就是一个方法的封装,<br>我们回到EventBus 的register方法 其实我们上面就是做好找到所有的方法并且每个方法都封装好最后成为一个 List subscriberMethods这个方法列表我们回顾一下源码</p>
 <pre class="line-numbers language-none"><code class="language-none">
 
-public void register(Object subscriber) &#123;
-       Class&lt;?&gt; subscriberClass &#x3D; subscriber.getClass();
-       List&lt;SubscriberMethod&gt; subscriberMethods &#x3D; subscriberMethodFinder.findSubscriberMethods(subscriberClass);
-       synchronized (this) &#123;
-           for (SubscriberMethod subscriberMethod : subscriberMethods) &#123;
-               subscribe(subscriber, subscriberMethod);
-           &#125;
-       &#125;
-   &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+其实大部分的情况下都会走到findUsingReflectionInSingleClass这个方法，这个才是解析注解方法的核心,我们看一下源码
 
 
-<p>我们看一下 subscribe(subscriber, subscriberMethod);</p>
-<pre class="line-numbers language-none"><code class="language-none">
-private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) &#123;
-       Class&lt;?&gt; eventType &#x3D; subscriberMethod.eventType;
-       Subscription newSubscription &#x3D; new Subscription(subscriber, subscriberMethod);
-       CopyOnWriteArrayList&lt;Subscription&gt; subscriptions &#x3D; subscriptionsByEventType.get(eventType);
-       if (subscriptions &#x3D;&#x3D; null) &#123;
-           subscriptions &#x3D; new CopyOnWriteArrayList&lt;&gt;();
-           subscriptionsByEventType.put(eventType, subscriptions);
-       &#125; else &#123;
-           if (subscriptions.contains(newSubscription)) &#123;
-               throw new EventBusException(&quot;Subscriber &quot; + subscriber.getClass() + &quot; already registered to event &quot;
-                       + eventType);
-           &#125;
-       &#125;
-       int size &#x3D; subscriptions.size();
-       for (int i &#x3D; 0; i &lt;&#x3D; size; i++) &#123;
-           if (i &#x3D;&#x3D; size || subscriberMethod.priority &gt; subscriptions.get(i).subscriberMethod.priority) &#123;
-               subscriptions.add(i, newSubscription);
-               break;
-           &#125;
-       &#125;
-
-       List&lt;Class&lt;?&gt;&gt; subscribedEvents &#x3D; typesBySubscriber.get(subscriber);
-       if (subscribedEvents &#x3D;&#x3D; null) &#123;
-           subscribedEvents &#x3D; new ArrayList&lt;&gt;();
-           typesBySubscriber.put(subscriber, subscribedEvents);
-       &#125;
-       subscribedEvents.add(eventType);
-       if (subscriberMethod.sticky) &#123;
-           if (eventInheritance) &#123;
-         &lt;Class&gt;).
-               Set&lt;Map.Entry&lt;Class&lt;?&gt;, Object&gt;&gt; entries &#x3D; stickyEvents.entrySet();
-               for (Map.Entry&lt;Class&lt;?&gt;, Object&gt; entry : entries) &#123;
-                   Class&lt;?&gt; candidateEventType &#x3D; entry.getKey();
-                   if (eventType.isAssignableFrom(candidateEventType)) &#123;
-                       Object stickyEvent &#x3D; entry.getValue();
-                       checkPostStickyEventToSubscription(newSubscription, stickyEvent);
-                   &#125;
-               &#125;
-           &#125; else &#123;
-               Object stickyEvent &#x3D; stickyEvents.get(eventType);
-               checkPostStickyEventToSubscription(newSubscription, stickyEvent);
-           &#125;
-       &#125;
-   &#125;
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ private void findUsingReflectionInSingleClass(FindState findState) &#123;
+        Method[] methods;
+        try &#123;
+            // This is faster than getMethods, especially when subscribers are fat classes like Activities
+            methods = findState.clazz.getDeclaredMethods();
+        &#125; catch (Throwable th) &#123;
+            // Workaround for java.lang.NoClassDefFoundError, see https://github.com/greenrobot/EventBus/issues/149
+            methods = findState.clazz.getMethods();
+            findState.skipSuperClasses = true;
+        &#125;
+        for (Method method : methods) &#123;
+            int modifiers = method.getModifiers();
+            if ((modifiers &amp; Modifier.PUBLIC) != 0 &amp;&amp; (modifiers &amp; MODIFIERS_IGNORE) == 0) &#123;
+                Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();
+                if (parameterTypes.length == 1) &#123;
+                    Subscribe subscribeAnnotation = method.getAnnotation(Subscribe.class);
+                    if (subscribeAnnotation != null) &#123;
+                        Class&lt;?&gt; eventType = parameterTypes[0];
+                        if (findState.checkAdd(method, eventType)) &#123;
+                            ThreadMode threadMode = subscribeAnnotation.threadMode();
+                            findState.subscriberMethods.add(new SubscriberMethod(method, eventType, threadMode,
+                                    subscribeAnnotation.priority(), subscribeAnnotation.sticky()));
+                        &#125;
+                    &#125;
+                &#125; else if (strictMethodVerification &amp;&amp; method.isAnnotationPresent(Subscribe.class)) &#123;
+                    String methodName = method.getDeclaringClass().getName() + &quot;.&quot; + method.getName();
+                    throw new EventBusException(&quot;@Subscribe method &quot; + methodName +
+                            &quot;must have exactly 1 parameter but has &quot; + parameterTypes.length);
+                &#125;
+            &#125; else if (strictMethodVerification &amp;&amp; method.isAnnotationPresent(Subscribe.class)) &#123;
+                String methodName = method.getDeclaringClass().getName() + &quot;.&quot; + method.getName();
+                throw new EventBusException(methodName +
+                        &quot; is a illegal @Subscribe method: must be public, non-static, and non-abstract&quot;);
+            &#125;
+        &#125;
+    &#125;
 
 
 
 <pre class="line-numbers language-none"><code class="language-none">
+
+
+
+
+
+首先通过findState的有一个订阅者的类反射拿到所有方法，对所有方法进行遍历，对每个方法进行遍历方法必须为PUBLIC，参数长度必须为1，然后必须有Subscribe这个注解获取方法的线程模式，是否是粘性事件，权重大小等 加入到findState的 subscriberMethods就是方法集合，最后返回方法集合，subscriberMethods这个类已经在上面详细讲解了，其实就是一个方法的封装,
+我们回到EventBus 的register方法 其实我们上面就是做好找到所有的方法并且每个方法都封装好最后成为一个 List subscriberMethods这个方法列表我们回顾一下源码
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+ public void register(Object subscriber) &#123;
+        Class&lt;?&gt; subscriberClass = subscriber.getClass();
+        List&lt;SubscriberMethod&gt; subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass);
+        synchronized (this) &#123;
+            for (SubscriberMethod subscriberMethod : subscriberMethods) &#123;
+                subscribe(subscriber, subscriberMethod);
+            &#125;
+        &#125;
+    &#125;
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+我们看一下 subscribe(subscriber, subscriberMethod);
+
+
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+ private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) &#123;
+        Class&lt;?&gt; eventType = subscriberMethod.eventType;
+        Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+        CopyOnWriteArrayList&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions == null) &#123;
+            subscriptions = new CopyOnWriteArrayList&lt;&gt;();
+            subscriptionsByEventType.put(eventType, subscriptions);
+        &#125; else &#123;
+            if (subscriptions.contains(newSubscription)) &#123;
+                throw new EventBusException(&quot;Subscriber &quot; + subscriber.getClass() + &quot; already registered to event &quot;
+                        + eventType);
+            &#125;
+        &#125;
+        int size = subscriptions.size();
+        for (int i = 0; i &lt;= size; i++) &#123;
+            if (i == size || subscriberMethod.priority &gt; subscriptions.get(i).subscriberMethod.priority) &#123;
+                subscriptions.add(i, newSubscription);
+                break;
+            &#125;
+        &#125;
+
+        List&lt;Class&lt;?&gt;&gt; subscribedEvents = typesBySubscriber.get(subscriber);
+        if (subscribedEvents == null) &#123;
+            subscribedEvents = new ArrayList&lt;&gt;();
+            typesBySubscriber.put(subscriber, subscribedEvents);
+        &#125;
+        subscribedEvents.add(eventType);
+        if (subscriberMethod.sticky) &#123;
+            if (eventInheritance) &#123;
+          &lt;Class&gt;).
+                Set&lt;Map.Entry&lt;Class&lt;?&gt;, Object&gt;&gt; entries = stickyEvents.entrySet();
+                for (Map.Entry&lt;Class&lt;?&gt;, Object&gt; entry : entries) &#123;
+                    Class&lt;?&gt; candidateEventType = entry.getKey();
+                    if (eventType.isAssignableFrom(candidateEventType)) &#123;
+                        Object stickyEvent = entry.getValue();
+                        checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                    &#125;
+                &#125;
+            &#125; else &#123;
+                Object stickyEvent = stickyEvents.get(eventType);
+                checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+            &#125;
+        &#125;
+    &#125;
+
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 final class Subscription &#123;
     final Object subscriber;
     final SubscriberMethod subscriberMethod;
     &#125;
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-<p>我们先看一下Subscription 点击进去其实就是一个更大的封装类里面有每个一个订阅者 对应一个方法，我们接下里看下面代码</p>
 <pre class="line-numbers language-none"><code class="language-none">
-CopyOnWriteArrayList&lt;Subscription&gt; subscriptions &#x3D; subscriptionsByEventType.get(eventType);
-       if (subscriptions &#x3D;&#x3D; null) &#123;
-           subscriptions &#x3D; new CopyOnWriteArrayList&lt;&gt;();
-           subscriptionsByEventType.put(eventType, subscriptions);
+
+
+我们先看一下Subscription 点击进去其实就是一个更大的封装类里面有每个一个订阅者 对应一个方法，我们接下里看下面代码
+
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+ CopyOnWriteArrayList&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions == null) &#123;
+            subscriptions = new CopyOnWriteArrayList&lt;&gt;();
+            subscriptionsByEventType.put(eventType, subscriptions);
 
 
 <pre class="line-numbers language-none"><code class="language-none">
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 我们先总结一下subscribe这个方法做了什么
 （1）首先判断是否有注册过改事件了如果注册了就抛出异常，如果没有就是正常的，创建一个Subscription 其实这个类就是一个注册类对应一个方法的封装，然后创建一个列表
 （2）按优先级加入subscriptionsByEventType 这个是一个已发出的参数类型为key subscriptions为value的map集合，然后将subscription根据优先级加入value中
 （3）然后在添加到typesBySubscriber的value的list中这个是以Subscriber为key 方法的参数为value的map中
 （4）分发粘性事件checkPostStickyEventToSubscription
 我们简单看一下checkPostStickyEventToSubscription,其实他最后是调用postToSubscription方法通过不同的线程模式调用不同的分发器，不同的分发器我们等一下讲，这里我们只要知道粘性事件也是走到了这里就可以了
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">
-private void checkPostStickyEventToSubscription(Subscription newSubscription, Object stickyEvent) &#123;
-      if (stickyEvent !&#x3D; null) &#123;
-          &#x2F;&#x2F; If the subscriber is trying to abort the event, it will fail (event is not tracked in posting state)
-          &#x2F;&#x2F; --&gt; Strange corner case, which we don&#39;t take care of here.
-          postToSubscription(newSubscription, stickyEvent, Looper.getMainLooper() &#x3D;&#x3D; Looper.myLooper());
-      &#125;
-  &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-
-
-<pre class="line-numbers language-none"><code class="language-none">
-private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) &#123;
-    switch (subscription.subscriberMethod.threadMode) &#123;
-        case POSTING:
-            invokeSubscriber(subscription, event);
-            break;
-        case MAIN:
-            if (isMainThread) &#123;
-                invokeSubscriber(subscription, event);
-            &#125; else &#123;
-                mainThreadPoster.enqueue(subscription, event);
-            &#125;
-            break;
-        case BACKGROUND:
-            if (isMainThread) &#123;
-                backgroundPoster.enqueue(subscription, event);
-            &#125; else &#123;
-                invokeSubscriber(subscription, event);
-            &#125;
-            break;
-        case ASYNC:
-            asyncPoster.enqueue(subscription, event);
-            break;
-        default:
-            throw new IllegalStateException(&quot;Unknown thread mode: &quot; + subscription.subscriberMethod.threadMode);
+  private void checkPostStickyEventToSubscription(Subscription newSubscription, Object stickyEvent) &#123;
+        if (stickyEvent != null) &#123;
+            // If the subscriber is trying to abort the event, it will fail (event is not tracked in posting state)
+            // --&gt; Strange corner case, which we don&#39;t take care of here.
+            postToSubscription(newSubscription, stickyEvent, Looper.getMainLooper() == Looper.myLooper());
+        &#125;
     &#125;
-&#125;
-
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>最后我们注册好了之后，我们就要来最后一步发送事件了</p>
-<pre class="line-numbers language-none"><code class="language-none">
-public void postEvent() &#123;
-    EventBus.getDefault().post(new MyBusEvent(&quot;hhh&quot;));
-&#125;
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
 <pre class="line-numbers language-none"><code class="language-none">
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+    private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) &#123;
+        switch (subscription.subscriberMethod.threadMode) &#123;
+            case POSTING:
+                invokeSubscriber(subscription, event);
+                break;
+            case MAIN:
+                if (isMainThread) &#123;
+                    invokeSubscriber(subscription, event);
+                &#125; else &#123;
+                    mainThreadPoster.enqueue(subscription, event);
+                &#125;
+                break;
+            case BACKGROUND:
+                if (isMainThread) &#123;
+                    backgroundPoster.enqueue(subscription, event);
+                &#125; else &#123;
+                    invokeSubscriber(subscription, event);
+                &#125;
+                break;
+            case ASYNC:
+                asyncPoster.enqueue(subscription, event);
+                break;
+            default:
+                throw new IllegalStateException(&quot;Unknown thread mode: &quot; + subscription.subscriberMethod.threadMode);
+        &#125;
+    &#125;
+
+
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+
+最后我们注册好了之后，我们就要来最后一步发送事件了
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    public void postEvent() &#123;
+        EventBus.getDefault().post(new MyBusEvent(&quot;hhh&quot;));
+    &#125;
+
+
+<pre class="line-numbers language-none"><code class="language-none">
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 
 public void post(Object event) &#123;
-        PostingThreadState postingState &#x3D; currentPostingThreadState.get();
-        List&lt;Object&gt; eventQueue &#x3D; postingState.eventQueue;
+        PostingThreadState postingState = currentPostingThreadState.get();
+        List&lt;Object&gt; eventQueue = postingState.eventQueue;
         eventQueue.add(event);
 
         if (!postingState.isPosting) &#123;
-            postingState.isMainThread &#x3D; Looper.getMainLooper() &#x3D;&#x3D; Looper.myLooper();
-            postingState.isPosting &#x3D; true;
+            postingState.isMainThread = Looper.getMainLooper() == Looper.myLooper();
+            postingState.isPosting = true;
             if (postingState.canceled) &#123;
                 throw new EventBusException(&quot;Internal error. Abort state was not reset&quot;);
             &#125;
@@ -1076,51 +1263,60 @@ public void post(Object event) &#123;
                     postSingleEvent(eventQueue.remove(0), postingState);
                 &#125;
             &#125; finally &#123;
-                postingState.isPosting &#x3D; false;
-                postingState.isMainThread &#x3D; false;
+                postingState.isPosting = false;
+                postingState.isMainThread = false;
             &#125;
         &#125;
     &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+我们先看一下PostingThreadState
 
 
-<p>我们先看一下PostingThreadState</p>
-<pre class="line-numbers language-none"><code class="language-none">final static class PostingThreadState &#123;
-       final List&lt;Object&gt; eventQueue &#x3D; new ArrayList&lt;Object&gt;();
-       boolean isPosting;
-       boolean isMainThread;
-       Subscription subscription;
-       Object event;
-       boolean canceled;
-   &#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+ final static class PostingThreadState &#123;
+        final List&lt;Object&gt; eventQueue = new ArrayList&lt;Object&gt;();
+        boolean isPosting;
+        boolean isMainThread;
+        Subscription subscription;
+        Object event;
+        boolean canceled;
+    &#125;
+
+
+<pre class="line-numbers language-none"><code class="language-none">
+
+
+其实就是事件发送的一个封装类，包括是否正在发送，是否主线程是否取消等，然后调用postSingleEvent方法，我们看如何实现的
+
+
+
+
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-
-<p>其实就是事件发送的一个封装类，包括是否正在发送，是否主线程是否取消等，然后调用postSingleEvent方法，我们看如何实现的</p>
-<pre class="line-numbers language-none"><code class="language-none">
-
 private void postSingleEvent(Object event, PostingThreadState postingState) throws Error &#123;
-        Class&lt;?&gt; eventClass &#x3D; event.getClass();
-        boolean subscriptionFound &#x3D; false;
+        Class&lt;?&gt; eventClass = event.getClass();
+        boolean subscriptionFound = false;
         if (eventInheritance) &#123;
-            List&lt;Class&lt;?&gt;&gt; eventTypes &#x3D; lookupAllEventTypes(eventClass);
-            int countTypes &#x3D; eventTypes.size();
-            for (int h &#x3D; 0; h &lt; countTypes; h++) &#123;
-                Class&lt;?&gt; clazz &#x3D; eventTypes.get(h);
-                subscriptionFound |&#x3D; postSingleEventForEventType(event, postingState, clazz);
+            List&lt;Class&lt;?&gt;&gt; eventTypes = lookupAllEventTypes(eventClass);
+            int countTypes = eventTypes.size();
+            for (int h = 0; h &lt; countTypes; h++) &#123;
+                Class&lt;?&gt; clazz = eventTypes.get(h);
+                subscriptionFound |= postSingleEventForEventType(event, postingState, clazz);
             &#125;
         &#125; else &#123;
-            subscriptionFound &#x3D; postSingleEventForEventType(event, postingState, eventClass);
+            subscriptionFound = postSingleEventForEventType(event, postingState, eventClass);
         &#125;
         if (!subscriptionFound) &#123;
             if (logNoSubscriberMessages) &#123;
                 Log.d(TAG, &quot;No subscribers registered for event &quot; + eventClass);
             &#125;
-            if (sendNoSubscriberEvent &amp;&amp; eventClass !&#x3D; NoSubscriberEvent.class &amp;&amp;
-                    eventClass !&#x3D; SubscriberExceptionEvent.class) &#123;
+            if (sendNoSubscriberEvent &amp;&amp; eventClass != NoSubscriberEvent.class &amp;&amp;
+                    eventClass != SubscriberExceptionEvent.class) &#123;
                 post(new NoSubscriberEvent(this, event));
             &#125;
         &#125;
@@ -1128,46 +1324,56 @@ private void postSingleEvent(Object event, PostingThreadState postingState) thro
 
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-<p>做了很多处理 我们直接看postSingleEventForEventType方法，它返回了subscriptionFound 如果这个发送信息失败的话，就会打印出来，没有这个监听者，我们看一下postSingleEventForEventType是如何发送的。</p>
 <pre class="line-numbers language-none"><code class="language-none">
 
-private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class&lt;?&gt; eventClass) &#123;
-      CopyOnWriteArrayList&lt;Subscription&gt; subscriptions;
-      synchronized (this) &#123;
-          subscriptions &#x3D; subscriptionsByEventType.get(eventClass);
-      &#125;
-      if (subscriptions !&#x3D; null &amp;&amp; !subscriptions.isEmpty()) &#123;
-          for (Subscription subscription : subscriptions) &#123;
-              postingState.event &#x3D; event;
-              postingState.subscription &#x3D; subscription;
-              boolean aborted &#x3D; false;
-              try &#123;
-                  postToSubscription(subscription, event, postingState.isMainThread);
-                  aborted &#x3D; postingState.canceled;
-              &#125; finally &#123;
-                  postingState.event &#x3D; null;
-                  postingState.subscription &#x3D; null;
-                  postingState.canceled &#x3D; false;
-              &#125;
-              if (aborted) &#123;
-                  break;
-              &#125;
-          &#125;
-          return true;
-      &#125;
-      return false;
-  &#125;
+做了很多处理 我们直接看postSingleEventForEventType方法，它返回了subscriptionFound 如果这个发送信息失败的话，就会打印出来，没有这个监听者，我们看一下postSingleEventForEventType是如何发送的。
 
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<p>我们可以看到它通过post的事件类型去从subscriptionsByEventType这个map中找到subscriptions这个对象然后调动postToSubscription这个方法最后释放之类的就不讲了，我们直接看postToSubscription这个方法</p>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+  private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class&lt;?&gt; eventClass) &#123;
+        CopyOnWriteArrayList&lt;Subscription&gt; subscriptions;
+        synchronized (this) &#123;
+            subscriptions = subscriptionsByEventType.get(eventClass);
+        &#125;
+        if (subscriptions != null &amp;&amp; !subscriptions.isEmpty()) &#123;
+            for (Subscription subscription : subscriptions) &#123;
+                postingState.event = event;
+                postingState.subscription = subscription;
+                boolean aborted = false;
+                try &#123;
+                    postToSubscription(subscription, event, postingState.isMainThread);
+                    aborted = postingState.canceled;
+                &#125; finally &#123;
+                    postingState.event = null;
+                    postingState.subscription = null;
+                    postingState.canceled = false;
+                &#125;
+                if (aborted) &#123;
+                    break;
+                &#125;
+            &#125;
+            return true;
+        &#125;
+        return false;
+    &#125;
+
+
+
+
 <pre class="line-numbers language-none"><code class="language-none">
+
+我们可以看到它通过post的事件类型去从subscriptionsByEventType这个map中找到subscriptions这个对象然后调动postToSubscription这个方法最后释放之类的就不讲了，我们直接看postToSubscription这个方法
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
 private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) &#123;
         switch (subscription.subscriberMethod.threadMode) &#123;
@@ -1197,12 +1403,14 @@ private void postToSubscription(Subscription subscription, Object event, boolean
     &#125;
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-<p>这个方法上面也有提到 我们详细展开讲解，根据方法的一个线程模式采用四种不同的方式如果方法注册使用主线程方式那么如果发送也在主线程那么直接使用invokeSubscriber，这个其实是使用反射机制调用</p>
 <pre class="line-numbers language-none"><code class="language-none">
+
+
+这个方法上面也有提到 我们详细展开讲解，根据方法的一个线程模式采用四种不同的方式如果方法注册使用主线程方式那么如果发送也在主线程那么直接使用invokeSubscriber，这个其实是使用反射机制调用
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
 void invokeSubscriber(Subscription subscription, Object event) &#123;
         try &#123;
@@ -1213,11 +1421,15 @@ void invokeSubscriber(Subscription subscription, Object event) &#123;
             throw new IllegalStateException(&quot;Unexpected exception&quot;, e);
         &#125;
     &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-<p>如果注册主线程但是发送广播是在子线程的话，那么使用 mainThreadPoster.enqueue(subscription, event);<br>mainThreadPoster这个类之前也有讲过 其实就是继承Runnable开启了一个线程我们回顾一下源码</p>
 <pre class="line-numbers language-none"><code class="language-none">
+
+如果注册主线程但是发送广播是在子线程的话，那么使用 mainThreadPoster.enqueue(subscription, event);
+mainThreadPoster这个类之前也有讲过 其实就是继承Runnable开启了一个线程我们回顾一下源码
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 final class HandlerPoster extends Handler &#123;
 
    private final PendingPostQueue queue;
@@ -1227,17 +1439,17 @@ final class HandlerPoster extends Handler &#123;
 
    HandlerPoster(EventBus eventBus, Looper looper, int maxMillisInsideHandleMessage) &#123;
        super(looper);
-       this.eventBus &#x3D; eventBus;
-       this.maxMillisInsideHandleMessage &#x3D; maxMillisInsideHandleMessage;
-       queue &#x3D; new PendingPostQueue();
+       this.eventBus = eventBus;
+       this.maxMillisInsideHandleMessage = maxMillisInsideHandleMessage;
+       queue = new PendingPostQueue();
    &#125;
 
    void enqueue(Subscription subscription, Object event) &#123;
-       PendingPost pendingPost &#x3D; PendingPost.obtainPendingPost(subscription, event);
+       PendingPost pendingPost = PendingPost.obtainPendingPost(subscription, event);
        synchronized (this) &#123;
            queue.enqueue(pendingPost);
            if (!handlerActive) &#123;
-               handlerActive &#x3D; true;
+               handlerActive = true;
                if (!sendMessage(obtainMessage())) &#123;
                    throw new EventBusException(&quot;Could not send handler message&quot;);
                &#125;
@@ -1247,50 +1459,57 @@ final class HandlerPoster extends Handler &#123;
 
    @Override
    public void handleMessage(Message msg) &#123;
-       boolean rescheduled &#x3D; false;
+       boolean rescheduled = false;
        try &#123;
-           long started &#x3D; SystemClock.uptimeMillis();
+           long started = SystemClock.uptimeMillis();
            while (true) &#123;
-               PendingPost pendingPost &#x3D; queue.poll();
-               if (pendingPost &#x3D;&#x3D; null) &#123;
+               PendingPost pendingPost = queue.poll();
+               if (pendingPost == null) &#123;
                    synchronized (this) &#123;
-                       &#x2F;&#x2F; Check again, this time in synchronized
-                       pendingPost &#x3D; queue.poll();
-                       if (pendingPost &#x3D;&#x3D; null) &#123;
-                           handlerActive &#x3D; false;
+                       // Check again, this time in synchronized
+                       pendingPost = queue.poll();
+                       if (pendingPost == null) &#123;
+                           handlerActive = false;
                            return;
                        &#125;
                    &#125;
                &#125;
                eventBus.invokeSubscriber(pendingPost);
-               long timeInMethod &#x3D; SystemClock.uptimeMillis() - started;
-               if (timeInMethod &gt;&#x3D; maxMillisInsideHandleMessage) &#123;
+               long timeInMethod = SystemClock.uptimeMillis() - started;
+               if (timeInMethod &gt;= maxMillisInsideHandleMessage) &#123;
                    if (!sendMessage(obtainMessage())) &#123;
                        throw new EventBusException(&quot;Could not send handler message&quot;);
                    &#125;
-                   rescheduled &#x3D; true;
+                   rescheduled = true;
                    return;
                &#125;
            &#125;
        &#125; finally &#123;
-           handlerActive &#x3D; rescheduled;
+           handlerActive = rescheduled;
        &#125;
    &#125;
 &#125;
 
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-
-
-
-
-<p>这里其实就是通过handler来调用 eventBus.invokeSubscriber(pendingPost);来执行反射操作，换汤不换药<br>如果你方法注册用BACKGROUND且发送在主线程那么就使用BackgroundPoster，它其实就是一个线程，run方法的意思就是死循环然后将消息队列里面的所有信息全部调用反射去执行<br>如果你方法注册使用ASYNC 那么就会使用 asyncPoster.enqueue(subscription, event);这个asyncPoster其实也是一个线程，只是它每次取队列的一个进行反射调用<br>我们最后看一下反注册方法unregister方法</p>
 <pre class="line-numbers language-none"><code class="language-none">
 
+
+
+
+这里其实就是通过handler来调用 eventBus.invokeSubscriber(pendingPost);来执行反射操作，换汤不换药
+如果你方法注册用BACKGROUND且发送在主线程那么就使用BackgroundPoster，它其实就是一个线程，run方法的意思就是死循环然后将消息队列里面的所有信息全部调用反射去执行
+如果你方法注册使用ASYNC 那么就会使用 asyncPoster.enqueue(subscription, event);这个asyncPoster其实也是一个线程，只是它每次取队列的一个进行反射调用
+我们最后看一下反注册方法unregister方法
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
  public synchronized void unregister(Object subscriber) &#123;
-        List&lt;Class&lt;?&gt;&gt; subscribedTypes &#x3D; typesBySubscriber.get(subscriber);
-        if (subscribedTypes !&#x3D; null) &#123;
+        List&lt;Class&lt;?&gt;&gt; subscribedTypes = typesBySubscriber.get(subscriber);
+        if (subscribedTypes != null) &#123;
             for (Class&lt;?&gt; eventType : subscribedTypes) &#123;
                 unsubscribeByEventType(subscriber, eventType);
             &#125;
@@ -1304,13 +1523,13 @@ final class HandlerPoster extends Handler &#123;
 
 
 private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType) &#123;
-        List&lt;Subscription&gt; subscriptions &#x3D; subscriptionsByEventType.get(eventType);
-        if (subscriptions !&#x3D; null) &#123;
-            int size &#x3D; subscriptions.size();
-            for (int i &#x3D; 0; i &lt; size; i++) &#123;
-                Subscription subscription &#x3D; subscriptions.get(i);
-                if (subscription.subscriber &#x3D;&#x3D; subscriber) &#123;
-                    subscription.active &#x3D; false;
+        List&lt;Subscription&gt; subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions != null) &#123;
+            int size = subscriptions.size();
+            for (int i = 0; i &lt; size; i++) &#123;
+                Subscription subscription = subscriptions.get(i);
+                if (subscription.subscriber == subscriber) &#123;
+                    subscription.active = false;
                     subscriptions.remove(i);
                     i--;
                     size--;
@@ -1319,11 +1538,84 @@ private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType)
         &#125;
     &#125;
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+```
 
 
-<p>其实它很简单 就是将typesBySubscriber这个map中的对应key和value给删除掉 这样post方法就找不到这个 subscriptionsByEventType这个map也要删除掉对应的信息。</p>
-<p>4.总结<br>看完了源码我们至少要懂得几个东西，一个是EventBus是靠两个关键的map来维护的，通过发送的事件类型来找到对应的方法来通过反射机制调用这个方法，这中间还穿插着很多知识点，像不同的线程采用不同的分发器，对方法的解析（反射拿到类所有方法进行遍历 ）和封装等。</p>
+其实它很简单 就是将typesBySubscriber这个map中的对应key和value给删除掉 这样post方法就找不到这个 subscriptionsByEventType这个map也要删除掉对应的信息。
+
+
+4.总结
+看完了源码我们至少要懂得几个东西，一个是EventBus是靠两个关键的map来维护的，通过发送的事件类型来找到对应的方法来通过反射机制调用这个方法，这中间还穿插着很多知识点，像不同的线程采用不同的分发器，对方法的解析（反射拿到类所有方法进行遍历 ）和封装等。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
 
                 
             </div>
@@ -1510,7 +1802,7 @@ private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType)
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
                 <a href="/2021/04/01/UML%E5%85%A5%E9%97%A8%E5%88%9D%E8%AF%86/">
                     <div class="card-image">
@@ -1558,7 +1850,7 @@ private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType)
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2021/03/08/%E5%86%85%E5%AD%98%E6%8A%96%E5%8A%A8%E4%B8%8E%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2MAT%E6%A3%80%E6%B5%8B/">
@@ -1632,7 +1924,7 @@ private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType)
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
         <div class="toc-widget card" style="background-color: white;">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
             <div id="toc-content"></div>
         </div>
     </div>
@@ -1797,13 +2089,13 @@ private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType)
             
             
                 <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;Total visits:&nbsp;
                     <span id="busuanzi_value_site_pv" class="white-color"></span>
             </span>
             
             
                 <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;Total visitors:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
             
@@ -1852,8 +2144,8 @@ private void unsubscribeByEventType(Object subscriber, Class&lt;?&gt; eventType)
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
                    class="search-input">
         </div>
         <div id="searchResult"></div>
