@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="UML入门, Vinda">
+    <meta name="keywords" content="线程优化, Vinda">
     <meta name="description" content="慢就是快,快就是慢">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>UML入门 | Vinda</title>
+    <title>线程优化 | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">UML入门</h1>
+                    <h1 class="description center-align post-title">线程优化</h1>
                 </div>
             </div>
         </div>
@@ -410,8 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
-                                <span class="chip bg-color">日常积累</span>
+                            <a href="/tags/%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%8C%96/">
+                                <span class="chip bg-color">线程优化</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
-                                日常积累
+                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
+                                性能优化
                             </a>
                         
                     </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2021-04-01
+                    2021-04-18
                 </div>
                 
 
@@ -459,36 +459,63 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>当有新人接手你的项目时候，你是否有足够的项目结构介绍资料给到新人？ 当你作为一个新人接手别人的项目的时候，看项目的结构图的时候是否会一脸懵逼，因为你没有系统的学习UML相关的知识。了解UML图的绘制一方面可以检查自己的代码设计，并能向他人进行讲解。</p>
-<p><img src="/images/UML_background.png" alt="背景"></p>
-<h2 id="介绍常见的箭头类型"><a href="#介绍常见的箭头类型" class="headerlink" title="介绍常见的箭头类型"></a>介绍常见的箭头类型</h2><p><img src="/images/arrow.png" alt="箭头"></p>
-<p>如上图我们从左往右依次介绍一下，分别是 依赖关系，关联关系，继承关系，实现关系，聚合关系，组合关系</p>
-<p>依赖关系：所谓依赖关系就是你这个类要能执行必须依赖另外一个对象，这样你可以把箭头指向这个类<br>关联关系：就是你这个类会使用到另外一个类，但是不是一定要用这个类。<br>继承关系：你这个类需要继承另外一个类<br>实现关系：你这个类会实现某个接口类<br>聚合：聚合表示一种弱拥有关系，体现的是A对象可以包含B但是B对象不是A对象的一部分，例如燕群可以包含一只燕，但是燕子也可以自己一个<br>组合：合成是一种强拥有关系，体现了严格的部分和整体关系，例如人是又器官组成的，器官离开了人不可以存活</p>
-<h2 id="分别举个例子"><a href="#分别举个例子" class="headerlink" title="分别举个例子"></a>分别举个例子</h2><p>依赖关系：<br>我们可以看到这个类的实现必须要依赖AndroidPhone这个类<br><img src="/images/uml_relyOn.png" alt="依赖关系"></p>
-<p>继承关系:<br><img src="/images/uml_extend.png" alt="继承关系"></p>
-<p><img src="/images/uml_extend2.png" alt="继承关系"></p>
-<p>实现关系<br><img src="/images/uml_implements.png" alt="实现关系"></p>
-<p><img src="/images/uml_implements2.png" alt="实现关系"></p>
-<p>聚合与组合<br><img src="/images/uml_combination.png" alt="聚合与组合"></p>
-<p><img src="/images/uml_combination2.png" alt="聚合与组合"></p>
-<p>记住聚合跟组合的区别就是在两个类是否可以独立工作</p>
-<p><img src="/images/uml_class_all.png" alt="整体类图全貌，常见类图画法"></p>
-<h2 id="活动图"><a href="#活动图" class="headerlink" title="活动图"></a>活动图</h2><p>圆角矩形：表示“动作”<br><img src="/images/uml_active.png" alt="动作"></p>
-<p>菱形：表示“决策”<br><img src="/images/uml_decision.png" alt="决策"></p>
-<p>粗实线：表示并行活动的开始（分离）和结束（汇合）<br><img src="/images/uml_decision.png" alt="结束和分离"></p>
-<p>黑圆：工作流的开始（初始节点）<br><img src="/images/uml_start.png" alt="开始"></p>
-<p>黑圈套住的黑圆：工作流的结束（结束节点）<br><img src="/images/uml_end_point.png" alt="结束"></p>
-<p>活动图的一些规则<br>第一个粗实线之后可以有若干分支，每个分支都是并行执行的<br>• 第二个粗实线之前，所有的分支汇合，所有的分支活动都完成才进入之后的环节<br>• 初始节点有且只有一个，结束节点可能不止一个</p>
-<p><img src="/images/uml_all_active.png" alt="常见的活动图"></p>
-<p>一些注意事项：<br>• 当有多个对象出现在活动图中时，可以考虑引入泳道<br>• 一个活动只能存在于唯一的泳道里</p>
-<p><img src="/images/uml_some_active.png" alt="常见的多泳道活动图"></p>
-<h2 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h2><p>对象的三种命名方式：</p>
-<p>显示实例名和类名，方式：实例名:类名<br>只显示类名，表示它是一个匿名对象，方式：:类名<br>只显示实例名，方式：实例名</p>
-<p><img src="/images/uml_time.png" alt="时序图"></p>
-<p>同步消息：消息的发送者把消息传递给接收者后停止活动，等待消息的接收者放弃或者返回消息，之<br>后才能执行下一步操作<br>• 异步消息：消息的发送者把消息传递给接收者后继续自己的活动，不等待接受者放弃或者返回消息</p>
-<p>组合片段（Combined Fragments） • 抉择（Alt）：与 if…then…else 对应<br>• 选项（Opt）：表示符合条件时执行<br>• 循环（Loop）：与 for 或者 foreach 对应<br>• 并行（Par）：与多线程对应</p>
-<p><img src="/images/uml_time_if.png" alt="时序图"></p>
-<p><img src="/images/uml_time_loop.png" alt="时序图"></p>
+                <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>了解线程的调度有利于我们开发项目</p>
+<p>线程调度模型<br>1、分时调度模型：轮流获取，均分cpu时间<br>2、抢占式调度模型:优先级搞的获取 jvm采用<br>Android ui线程的优先级是如下 越小优先级越高</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> THREAD_PRIORITY_DEFAULT <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h1 id="常见的线程的方式"><a href="#常见的线程的方式" class="headerlink" title="常见的线程的方式"></a>常见的线程的方式</h1><h2 id="Thread-方式"><a href="#Thread-方式" class="headerlink" title="Thread 方式"></a>Thread 方式</h2><p>优点：最简单，最常见异步方式<br>缺点：不易复用，频繁创建及销毁开销大<br>复杂场景不易使用</p>
+<h2 id="HandlerThread"><a href="#HandlerThread" class="headerlink" title="HandlerThread"></a>HandlerThread</h2><p>适合长时间消息队列</p>
+<h2 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a>IntentService</h2><p>集成了Service 在内部创建了HandlerThread<br>执行在异步执行<br>优先级比较高，不容易被kill</p>
+<h2 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask</h2><p>Android 提供的工具类<br>无需要自己处理线程切换</p>
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><p>已复用，减少频繁创建，销毁时间<br>功能强大：并发数控等</p>
+<h2 id="Rxjava"><a href="#Rxjava" class="headerlink" title="Rxjava"></a>Rxjava</h2><p>由强大的scheduler 集合提供了强大的切换方式</p>
+<p>线程使用准则<br>1、创建线程必须命名，这样方便定位</p>
+<p>2、关键一步任务要监控 比如aop监控</p>
+<p>3、设置合理的线程优先级</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token keyword">class</span> <span class="token class-name">ThreadPoolUtils</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ExecutorService</span> mService<span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">ThreadFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token class-name">Thread</span> <span class="token function">newThread</span><span class="token punctuation">(</span><span class="token class-name">Runnable</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">Thread</span> thread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            thread<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"thread name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> thread<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">ExecutorService</span> <span class="token function">getService</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+
+
+        <span class="token keyword">return</span>   mService<span class="token punctuation">;</span>
+
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span>
+
+
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 
             </div>
@@ -503,8 +530,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
-                                    <span class="chip bg-color">日常积累</span>
+                                <a href="/tags/%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%8C%96/">
+                                    <span class="chip bg-color">线程优化</span>
                                 </a>
                             
                         </div>
@@ -677,6 +704,55 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
+                <a href="/2021/08/01/MVVM%20%E4%B8%8EJetpack%E7%BB%93%E5%90%88/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="MVVM与JetPacket结合">
+                        
+                        <span class="card-title">MVVM与JetPacket结合</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
+                                    架构
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                        <span class="chip bg-color">日常积累</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2021/04/08/%E7%98%A6%E8%BA%AB%E4%BC%98%E5%8C%96/">
                     <div class="card-image">
                         
@@ -693,9 +769,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-08
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -713,55 +789,6 @@
                     
                     <a href="/tags/apk%E5%A4%A7%E5%B0%8F%E4%BC%98%E5%8C%96/">
                         <span class="chip bg-color">apk大小优化</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/03/08/EventBus/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="源码阅读-EventBus">
-                        
-                        <span class="card-title">源码阅读-EventBus</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-08
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" class="post-category">
-                                    源码阅读
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
-                        <span class="chip bg-color">源码阅读</span>
                     </a>
                     
                 </div>
