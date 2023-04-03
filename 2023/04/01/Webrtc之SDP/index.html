@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="启动优化, Vinda">
+    <meta name="keywords" content="WebRTC之SDP, Vinda">
     <meta name="description" content="慢就是快,快就是慢">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>启动优化 | Vinda</title>
+    <title>WebRTC之SDP | Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -294,7 +294,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">启动优化</h1>
+                    <h1 class="description center-align post-title">WebRTC之SDP</h1>
                 </div>
             </div>
         </div>
@@ -410,8 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Android%E5%BC%80%E5%8F%91/">
-                                <span class="chip bg-color">Android开发</span>
+                            <a href="/tags/webrtc/">
+                                <span class="chip bg-color">webrtc</span>
                             </a>
                         
                     </div>
@@ -422,8 +422,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
-                                性能优化
+                            <a href="/categories/webrtc/" class="post-category">
+                                webrtc
                             </a>
                         
                     </div>
@@ -435,7 +435,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-01-30
+                    2023-04-01
                 </div>
                 
 
@@ -459,76 +459,117 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="为什么要做启动优化"><a href="#为什么要做启动优化" class="headerlink" title="为什么要做启动优化"></a>为什么要做启动优化</h1><h2 id="1、第一体验很重要"><a href="#1、第一体验很重要" class="headerlink" title="1、第一体验很重要"></a>1、第一体验很重要</h2><h2 id="2、八秒定律：如果打开需要8秒钟那么用户就会放弃"><a href="#2、八秒定律：如果打开需要8秒钟那么用户就会放弃" class="headerlink" title="2、八秒定律：如果打开需要8秒钟那么用户就会放弃"></a>2、八秒定律：如果打开需要8秒钟那么用户就会放弃</h2><h1 id="冷启动是衡量的标准"><a href="#冷启动是衡量的标准" class="headerlink" title="冷启动是衡量的标准"></a>冷启动是衡量的标准</h1><p>冷启动流程<br>click-&gt;ipc-process.start-&gt;ActivityThread-&gt;bindApplication-&gt;LifeCycle-&gt;ViewRootImpl</p>
-<h2 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h2><p>Application和Activity 生命周期方法是优化的方向 其他的地方其实无法干预</p>
-<h2 id="adb命令获取启动时间"><a href="#adb命令获取启动时间" class="headerlink" title="adb命令获取启动时间"></a>adb命令获取启动时间</h2><p>adb shell am start -W packagename/首屏Activity</p>
-<pre class="line-numbers language-none"><code class="language-none">adb shell am start -W com.example.better&#x2F;.MainActivity
-Starting: Intent &#123; act&#x3D;android.intent.action.MAIN cat&#x3D;[android.intent.category.LAUNCHER] cmp&#x3D;com.example.better&#x2F;.MainActivity &#125;
-Status: ok
-Activity: com.example.better&#x2F;.MainActivity
-ThisTime: 364
-TotalTime: 364
-WaitTime: 374
-Complete
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>WaitTime 表示AMS启动Activity的总耗时</p>
-<p>TotalTime 表示所有Activity启动耗时</p>
-<p>ThisTime 表示最后一个Activity启动耗时</p>
-<h2 id="手动打点"><a href="#手动打点" class="headerlink" title="手动打点"></a>手动打点</h2><p>就是从开始时间到ui展示出来的时比如你从application 开始到View画出来时间</p>
-<p>比如创建一个类来负责记录时间</p>
-<pre class="line-numbers language-none"><code class="language-none">
-class LauncherTimer &#123;
-    private static long sTime;
-    public static void startRecord() &#123;
-        sTime &#x3D; System.currentTimeMillis();
-    &#125;
-    public static void endRecord() &#123;
-        long cost &#x3D; System.currentTimeMillis() - sTime;
-        Log.i(&quot;cost&quot;, &quot;endRecord: &quot; + cost);
-    &#125;
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>需要注意的是，应该是View绘制出来作为结束时间,比如可以监听某个View绘制的时候作为结束时间</p>
-<pre class="line-numbers language-none"><code class="language-none">
-findViewById(R.id.text).getViewTreeObserver().addOnPreDrawListener(() -&gt; &#123;
-           LauncherTimer.endRecord();
-           return true;
-       &#125;);
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h1 id="SDP-Session-Description-Protocol"><a href="#SDP-Session-Description-Protocol" class="headerlink" title="SDP(Session Description Protocol)"></a>SDP(Session Description Protocol)</h1><p>它是一种信息描述标准，本身不属于传输协议，但是可以被其他传输协议用来交换必要条件<br>sdp 就是webrtc用来告诉对方 自己支持哪些编解码，跟对方进行协商的<br>webrtc两端其实是无法知道对方的存在的，还是需要经过服务器进行中转，来告诉对方，我支持什么协议，对方支持什么协议</p>
+<h2 id="SDP规范"><a href="#SDP规范" class="headerlink" title="SDP规范"></a>SDP规范</h2><p>会话层<br>会话名称与目的<br>会话的存活时间<br>媒体层<br>1、媒体格式<br>2、传输协议<br>3、传输ip和端口<br>4、媒体负载类型</p>
+<p>Seesion Description<br>v= protocol version<br>o= owner/create and session identifier<br>s =session name<br>c = conn info - optional if included at session - level<br>a= zero or more session attribute lines</p>
+<p>Media Description<br>m= media name and transport address<br>c = conn info<br>b = bandwidth information<br>a= zero or more session attribute lines</p>
+<h2 id="一些重要的字段"><a href="#一些重要的字段" class="headerlink" title="一些重要的字段"></a>一些重要的字段</h2><p>version 必选<br>v=0 SDP的版本号<br>session name 必选<br>s =  会话名字  s- 表示忽略会话名字</p>
+<p>Origin/Owner 必选</p>
+<pre class="line-numbers language-none"><code class="language-none">o &#x3D; &lt;username&gt;&lt;sesssion id&gt;&lt;version&gt; &lt;network type&gt; &lt;address type&gt;&lt;address&gt;
+0&#x3D; -87878978988789 2 IN IP4 127.0.0.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
-<h2 id="工具选择"><a href="#工具选择" class="headerlink" title="工具选择"></a>工具选择</h2><h3 id="1、Traceview"><a href="#1、Traceview" class="headerlink" title="1、Traceview"></a>1、Traceview</h3><p>使用方式</p>
-<pre class="line-numbers language-none"><code class="language-none">Debug.startMethodTracing(&quot;app&quot;);
 
-Debug.stopMethodTracing();
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>Connection Data 可选</p>
+<pre class="line-numbers language-none"><code class="language-none">c&#x3D;&lt;network type&gt; &lt;address type&gt; &lt;connection address&gt;
+c&#x3D;IN IP4 0.0.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>它会在应用的目录上生成一个xx.trace 文件 通过Studio打开后可以发现大概长这样</p>
-<p><img src="/images/brace.png" alt="trace"></p>
-<p>上面滑动部分是你需要选中的时间范围</p>
-<p>中间部分会列出所有线程,还有每个做了什么事情，也就是方法调用栈<br>点击方法可以知道每个方法的耗时<br>total就是这个方法的耗时，<br>children 就是子方法的耗时<br>self 就是自己花费了多长时间<br>知道了这些就可以进行性能优化</p>
-<p>多关注TopDown就可以知道哪些方法耗时了</p>
-<p>这个工具比价适合去做开机启动优化，因为开始和结束已经埋在代码里面了。</p>
-<h3 id="2、systemtrace"><a href="#2、systemtrace" class="headerlink" title="2、systemtrace"></a>2、systemtrace</h3><p>这个应用更适合去做一下某些操作的卡顿</p>
-<p>使用方式</p>
-<pre class="line-numbers language-none"><code class="language-none">TraceCompat.beginSection(&quot;better&quot;);
-TraceCompat.endSection();
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>Media Announcements 必选</p>
+<pre class="line-numbers language-none"><code class="language-none">m&#x3D;&lt;media&gt;  &lt;fmt&#x2F;payload type list&gt;
+m&#x3D;audio 1024 UDP &#x2F;TLS&#x2F;RTP&#x2F;SAVPF 111 103 104 9 0 8 106 105 13 126<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>运行后执行</p>
-<pre class="line-numbers language-none"><code class="language-none">python &#x2F;Users&#x2F;weihuada&#x2F;Downloads&#x2F;platform-tools&#x2F;systrace&#x2F;systrace.py -b 32768 -t 5 -a com.example.better -o performance.html sched gfx view wm am app
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这个方法是 platform-tools里面自带的方法 </p>
-<p>这个方法在后续被google移除掉了<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/626eaebaa6a8">https://www.jianshu.com/p/626eaebaa6a8</a></p>
-<p>执行后会输出 performance.html 到当前目录</p>
-<p>然后通过浏览器 输入<br>chrome://tracing/<br>然后打开这个文件就可以了</p>
-<h2 id="启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件"><a href="#启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件" class="headerlink" title="启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件"></a>启动优化的核心思想是异步优化，让子线程分担主线程任务，并行减少同步事件</h2><p>但是要注意代码的执行先后顺序<br>有些代码是不能运行在异步线程的</p>
-<p>我们可以用CountDownLatch 这个类去处理代码的先后执行顺序的问题<br>我们可以比如开四条线程，最后100秒的主线程被分隔到4条线程中<br>每条线程最后就是25秒 用这个CountDownLatch 就是能先阻塞住<br>等到四条线程都处理完了再进行下面的操作 但是它不能解决不同线程之间的同步问题<br>为了解决线程之间的同步问题 我们可以引入线程执行器这里就不展示具体代码。 </p>
-<h2 id="将不重要的操作放到ui展示出来之后再初始化。"><a href="#将不重要的操作放到ui展示出来之后再初始化。" class="headerlink" title="将不重要的操作放到ui展示出来之后再初始化。"></a>将不重要的操作放到ui展示出来之后再初始化。</h2><h2 id="优化总方针"><a href="#优化总方针" class="headerlink" title="优化总方针"></a>优化总方针</h2><p>异步、延迟、懒加载</p>
-<h2 id="其他黑科技"><a href="#其他黑科技" class="headerlink" title="其他黑科技"></a>其他黑科技</h2><p>启动时抑制GC</p>
-<p>CPU锁频</p>
+
+<p>Suggested Attributes 可选</p>
+<pre class="line-numbers language-none"><code class="language-none">a&#x3D; &lt;TYPE&gt;或 a&#x3D;&lt;TYPE&gt; :&lt;VALUE&gt;
+a &#x3D;framerate:&lt;帧速率&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>rtpmap 可选</p>
+<pre class="line-numbers language-none"><code class="language-none">a&#x3D;rtpmap: &lt;fmt&#x2F;payload type&gt; &#x2F; [&#x2F;]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>例子：a=rtpmap:103 ISAC/16000</p>
+<pre class="line-numbers language-none"><code class="language-none">a&#x3D;fmtp: &lt;format&#x2F;payload type&gt; parameter s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>例子：a=fmtp:103 apt=106</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F;版本号
+V&#x3D;0
+起源  网络  协议  地址
+0&#x3D;T 4124882389307713477 2 IN IP4 127.0.0 .1
+名字
+S&#x3D;-
+时间
+t&#x3D;0 0
+以上就是会话层
+
+
+属性 视频  
+a&#x3D;group: BUNDLE 0 
+媒体流id               
+a&#x3D;msid-semantic: WMS D0Qg6FLGrndzIV29USeoRLpmTS7L63AvyCp
+媒体信息  video 只有视频 
+m&#x3D;video 9 UDP&#x2F;TLS&#x2F;RTP&#x2F;SAVPF 96 97 98 99 100 101 102 122 127 121 125 107 108 109  124 120 123 119 114
+连接数据  
+C&#x3D;IN IP4 0.0.0.0
+rtcp 描述
+a&#x3D;rtcp:9 IN IP4 0.0.0.0
+安全性的描述
+a&#x3D;ice-ufrag:CTgt 
+a&#x3D;ice-pwd:mGdhFvyq+YOc&#x2F;7AVe+3ySYek 
+a&#x3D;ice-options:trickle
+a&#x3D;fingerprint: sha-256 68:79:32:0A:D6:85:81:AF:63:A7:AA:88:2B:3B:DE:71:18:9B:12:5F:4B:60:1B:19:1D:55:09:0E:79:31:38:ED
+既可以服务也可以客户端 
+a&#x3D;setup:actpass 
+a&#x3D;mid: 0 
+a&#x3D;extmap:2 urn:ietf:params:rtp-hdrext:toffset 
+a&#x3D;extmap:3 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;abs-send-time
+a&#x3D;extmap:4 urn:3gpp:video-orientation 
+a&#x3D;extmap: 5 http:&#x2F;&#x2F;www.ietf.org&#x2F;id&#x2F;draft-holmer-rmcat-transport-wide-cc-extensions-01 
+a&#x3D;extmap:6 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;playout-delay
+a&#x3D;extmap:7 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;video-content-type
+a&#x3D;extmap:8 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;video-timing
+a&#x3D;extmap:10 http:&#x2F;&#x2F;tools.ietf.org&#x2F;html&#x2F;draft-ietf-avtext-framemarking-07
+a&#x3D;extmap:9 urn:ietf:params: rtp-hdrext: sdes:mid a&#x3D;sendrecv
+a&#x3D;msid: D0Qg6FLGrndzIV29USeoRLmTS7L63AvyCp 5b3eb697-b4de-4846-8bc8-304e11971475
+
+
+多路复用
+a&#x3D;rtcp-mux 
+丢包相关
+a&#x3D;rtcp-rsize
+a&#x3D;rtpmap: 96 VP8&#x2F;90000 
+a&#x3D;rtcp-fb:96 goog-remb 
+a&#x3D;rtcp-fb:96transport-cc 
+a&#x3D;rtcp-fb:96 ccm fir 
+
+
+a&#x3D;rtcp-fb:96 nack
+a&#x3D;rtcp-fb:96 nack pli
+a&#x3D;rtpmap:97 rtx&#x2F;900 00
+a&#x3D;fmtp:97 apt&#x3D;96
+a&#x3D;rtpmap:98 VP9&#x2F;90000 
+a&#x3D;rtcp-fb:98 goog-remb 
+a&#x3D;rtcp-fb:98 transport-cc 
+a&#x3D;rtcp-fb:98 cm fir 
+a&#x3D;rtcp-fb:98 nack
+a&#x3D;rtcp-fb:98 nack pli
+a&#x3D;fmtp:98 profile-id&#x3D;0
+a&#x3D;rtpmap:99 rtx&#x2F;90000
+a&#x3D;fmtp:99 apt&#x3D;98
+a&#x3D;rtpmap: 100 H264&#x2F;90000 
+a&#x3D;rtcp-fb:100 goog-remb 
+a&#x3D;rtcp-fb:100 transport-cc 
+a&#x3D;rtcp-fb:100 cm fir 
+a&#x3D;rtcp-fb:100 nack 
+a&#x3D;rtcp-fb: 100 nack pli I
+a&#x3D;fmtp: 100 level-asymmetry-allowed&#x3D;1;packetization-mode&#x3D;1;profile-level-id&#x3D;4200 1f 
+a&#x3D;rtpmap:101 rtx&#x2F;90000
+a&#x3D;fmtp:101 apt&#x3D;100
+a&#x3D;rtpmap: 102 H264&#x2F;90000 
+a&#x3D;rtcp-fb:102 goog-remb 
+a&#x3D;rtcp-fb:102 transport-cc 
+a&#x3D;rtcp-fb:102 c cm fir
+a&#x3D;rtcp-fb :102 nack
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>一般web 喜欢用socket io来实现 sdp的中转，socket io理论上就像一个聊天室一样，主要是中转信息一下</p>
 
                 
             </div>
@@ -543,8 +584,8 @@ TraceCompat.endSection();
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Android%E5%BC%80%E5%8F%91/">
-                                    <span class="chip bg-color">Android开发</span>
+                                <a href="/tags/webrtc/">
+                                    <span class="chip bg-color">webrtc</span>
                                 </a>
                             
                         </div>
@@ -713,9 +754,10 @@ TraceCompat.endSection();
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2023/04/01/Webrtc%E4%B9%8BSDP/">
                     <div class="card-image">
@@ -733,9 +775,9 @@ TraceCompat.endSection();
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -748,6 +790,7 @@ TraceCompat.endSection();
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -766,13 +809,13 @@ TraceCompat.endSection();
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/02/PlantUML/">
+                <a href="/2022/01/30/%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="PlantUML">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="启动优化">
                         
-                        <span class="card-title">PlantUML</span>
+                        <span class="card-title">启动优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -783,14 +826,14 @@ TraceCompat.endSection();
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/" class="post-category">
-                                    日常积累
+                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
+                                    性能优化
                                 </a>
                             
                             
@@ -800,8 +843,8 @@ TraceCompat.endSection();
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
-                        <span class="chip bg-color">日常积累</span>
+                    <a href="/tags/Android%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">Android开发</span>
                     </a>
                     
                 </div>
