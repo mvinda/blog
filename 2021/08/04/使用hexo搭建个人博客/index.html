@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="WebRTC之SDP, Vinda">
+    <meta name="keywords" content="Vinda">
     <meta name="description" content="慢就是快,快就是慢">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>WebRTC之SDP | Vinda</title>
+    <title>Vinda</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">WebRTC之SDP</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -408,25 +408,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/webrtc/">
-                                <span class="chip bg-color">webrtc</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/webrtc/" class="post-category">
-                                webrtc
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -435,7 +422,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2023-04-01
+                    2021-08-04
                 </div>
                 
 
@@ -459,117 +446,37 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="SDP-Session-Description-Protocol"><a href="#SDP-Session-Description-Protocol" class="headerlink" title="SDP(Session Description Protocol)"></a>SDP(Session Description Protocol)</h1><p>它是一种信息描述标准，本身不属于传输协议，但是可以被其他传输协议用来交换必要条件<br>sdp 就是webrtc用来告诉对方 自己支持哪些编解码，跟对方进行协商的<br>webrtc两端其实是无法知道对方的存在的，还是需要经过服务器进行中转，来告诉对方，我支持什么协议，对方支持什么协议</p>
-<h2 id="SDP规范"><a href="#SDP规范" class="headerlink" title="SDP规范"></a>SDP规范</h2><p>会话层<br>会话名称与目的<br>会话的存活时间<br>媒体层<br>1、媒体格式<br>2、传输协议<br>3、传输ip和端口<br>4、媒体负载类型</p>
-<p>Seesion Description<br>v= protocol version<br>o= owner/create and session identifier<br>s =session name<br>c = conn info - optional if included at session - level<br>a= zero or more session attribute lines</p>
-<p>Media Description<br>m= media name and transport address<br>c = conn info<br>b = bandwidth information<br>a= zero or more session attribute lines</p>
-<h2 id="一些重要的字段"><a href="#一些重要的字段" class="headerlink" title="一些重要的字段"></a>一些重要的字段</h2><p>version 必选<br>v=0 SDP的版本号<br>session name 必选<br>s =  会话名字  s- 表示忽略会话名字</p>
-<p>Origin/Owner 必选</p>
-<pre class="line-numbers language-none"><code class="language-none">o &#x3D; &lt;username&gt;&lt;sesssion id&gt;&lt;version&gt; &lt;network type&gt; &lt;address type&gt;&lt;address&gt;
-0&#x3D; -87878978988789 2 IN IP4 127.0.0.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<p>Connection Data 可选</p>
-<pre class="line-numbers language-none"><code class="language-none">c&#x3D;&lt;network type&gt; &lt;address type&gt; &lt;connection address&gt;
-c&#x3D;IN IP4 0.0.0.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>Media Announcements 必选</p>
-<pre class="line-numbers language-none"><code class="language-none">m&#x3D;&lt;media&gt;  &lt;fmt&#x2F;payload type list&gt;
-m&#x3D;audio 1024 UDP &#x2F;TLS&#x2F;RTP&#x2F;SAVPF 111 103 104 9 0 8 106 105 13 126<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-<p>Suggested Attributes 可选</p>
-<pre class="line-numbers language-none"><code class="language-none">a&#x3D; &lt;TYPE&gt;或 a&#x3D;&lt;TYPE&gt; :&lt;VALUE&gt;
-a &#x3D;framerate:&lt;帧速率&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>rtpmap 可选</p>
-<pre class="line-numbers language-none"><code class="language-none">a&#x3D;rtpmap: &lt;fmt&#x2F;payload type&gt; &#x2F; [&#x2F;]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>例子：a=rtpmap:103 ISAC/16000</p>
-<pre class="line-numbers language-none"><code class="language-none">a&#x3D;fmtp: &lt;format&#x2F;payload type&gt; parameter s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>例子：a=fmtp:103 apt=106</p>
-<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F;版本号
-V&#x3D;0
-起源  网络  协议  地址
-0&#x3D;T 4124882389307713477 2 IN IP4 127.0.0 .1
-名字
-S&#x3D;-
-时间
-t&#x3D;0 0
-以上就是会话层
-
-
-属性 视频  
-a&#x3D;group: BUNDLE 0 
-媒体流id               
-a&#x3D;msid-semantic: WMS D0Qg6FLGrndzIV29USeoRLpmTS7L63AvyCp
-媒体信息  video 只有视频 
-m&#x3D;video 9 UDP&#x2F;TLS&#x2F;RTP&#x2F;SAVPF 96 97 98 99 100 101 102 122 127 121 125 107 108 109  124 120 123 119 114
-连接数据  
-C&#x3D;IN IP4 0.0.0.0
-rtcp 描述
-a&#x3D;rtcp:9 IN IP4 0.0.0.0
-安全性的描述
-a&#x3D;ice-ufrag:CTgt 
-a&#x3D;ice-pwd:mGdhFvyq+YOc&#x2F;7AVe+3ySYek 
-a&#x3D;ice-options:trickle
-a&#x3D;fingerprint: sha-256 68:79:32:0A:D6:85:81:AF:63:A7:AA:88:2B:3B:DE:71:18:9B:12:5F:4B:60:1B:19:1D:55:09:0E:79:31:38:ED
-既可以服务也可以客户端 
-a&#x3D;setup:actpass 
-a&#x3D;mid: 0 
-a&#x3D;extmap:2 urn:ietf:params:rtp-hdrext:toffset 
-a&#x3D;extmap:3 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;abs-send-time
-a&#x3D;extmap:4 urn:3gpp:video-orientation 
-a&#x3D;extmap: 5 http:&#x2F;&#x2F;www.ietf.org&#x2F;id&#x2F;draft-holmer-rmcat-transport-wide-cc-extensions-01 
-a&#x3D;extmap:6 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;playout-delay
-a&#x3D;extmap:7 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;video-content-type
-a&#x3D;extmap:8 http:&#x2F;&#x2F;www.webrtc.org&#x2F;experiments&#x2F;rtp-hdrext&#x2F;video-timing
-a&#x3D;extmap:10 http:&#x2F;&#x2F;tools.ietf.org&#x2F;html&#x2F;draft-ietf-avtext-framemarking-07
-a&#x3D;extmap:9 urn:ietf:params: rtp-hdrext: sdes:mid a&#x3D;sendrecv
-a&#x3D;msid: D0Qg6FLGrndzIV29USeoRLmTS7L63AvyCp 5b3eb697-b4de-4846-8bc8-304e11971475
-
-
-多路复用
-a&#x3D;rtcp-mux 
-丢包相关
-a&#x3D;rtcp-rsize
-a&#x3D;rtpmap: 96 VP8&#x2F;90000 
-a&#x3D;rtcp-fb:96 goog-remb 
-a&#x3D;rtcp-fb:96transport-cc 
-a&#x3D;rtcp-fb:96 ccm fir 
-
-
-a&#x3D;rtcp-fb:96 nack
-a&#x3D;rtcp-fb:96 nack pli
-a&#x3D;rtpmap:97 rtx&#x2F;900 00
-a&#x3D;fmtp:97 apt&#x3D;96
-a&#x3D;rtpmap:98 VP9&#x2F;90000 
-a&#x3D;rtcp-fb:98 goog-remb 
-a&#x3D;rtcp-fb:98 transport-cc 
-a&#x3D;rtcp-fb:98 cm fir 
-a&#x3D;rtcp-fb:98 nack
-a&#x3D;rtcp-fb:98 nack pli
-a&#x3D;fmtp:98 profile-id&#x3D;0
-a&#x3D;rtpmap:99 rtx&#x2F;90000
-a&#x3D;fmtp:99 apt&#x3D;98
-a&#x3D;rtpmap: 100 H264&#x2F;90000 
-a&#x3D;rtcp-fb:100 goog-remb 
-a&#x3D;rtcp-fb:100 transport-cc 
-a&#x3D;rtcp-fb:100 cm fir 
-a&#x3D;rtcp-fb:100 nack 
-a&#x3D;rtcp-fb: 100 nack pli I
-a&#x3D;fmtp: 100 level-asymmetry-allowed&#x3D;1;packetization-mode&#x3D;1;profile-level-id&#x3D;4200 1f 
-a&#x3D;rtpmap:101 rtx&#x2F;90000
-a&#x3D;fmtp:101 apt&#x3D;100
-a&#x3D;rtpmap: 102 H264&#x2F;90000 
-a&#x3D;rtcp-fb:102 goog-remb 
-a&#x3D;rtcp-fb:102 transport-cc 
-a&#x3D;rtcp-fb:102 c cm fir
-a&#x3D;rtcp-fb :102 nack
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<p>一般web 喜欢用socket io来实现 sdp的中转，socket io理论上就像一个聊天室一样，主要是中转信息一下</p>
+                <h1 id="一、安装hexo"><a href="#一、安装hexo" class="headerlink" title="一、安装hexo"></a>一、安装hexo</h1><p>##1.安装Node.js<br>hexo是一款基于Node.js的静态博客框架，所以要使用它必须先安装Node.js。网上很多教程讲的都是如何编译源码安装Node.js。但我认为应该用最简单的方式取获取和使用软件或者框架，不是每个初学者都需要从一个软件的源代码编译开始学习。当然，在日后想要更深入理解它的时候，挖出它的源代码进行分析也是一种十分有效的途径。<br>下面是ubuntu下使用apt-get安装Node.js的方法（源自博客如何在Ubuntu上安装最新版本的Node.js ）</p>
+<p>1.apt-get update<br>2.apt-get install -y python-software-properties 3.software-properties-common<br>4.add-apt-repository ppa:chris-lea/node.js<br>5.apt-get update<br>6.apt-get install nodejs</p>
+<h2 id="2-安装hexo"><a href="#2-安装hexo" class="headerlink" title="2.安装hexo"></a>2.安装hexo</h2><p>之后安装hexo就更简单了，只需要这一行代码</p>
+<p>npm install hexo -g<br>3.更新hexo</p>
+<p>npm update hexo -g </p>
+<h1 id="二、创建和配置hexo项目"><a href="#二、创建和配置hexo项目" class="headerlink" title="二、创建和配置hexo项目"></a>二、创建和配置hexo项目</h1><h2 id="1-初始化hexo项目"><a href="#1-初始化hexo项目" class="headerlink" title="1.初始化hexo项目"></a>1.初始化hexo项目</h2><p>hexo init [folder]<br>如果指定 folder_，便会在目前的资料夹建立一个名为 _folder 的新资料夹，否则会在当前文件夹初始化。<br>执行完这条命令，会出现如下提示:</p>
+<p>INFO You are almost done! Don’t forget to run ‘npm install’ before you start blogging with Hexo!</p>
+<p>所以记得执行npm install</p>
+<h2 id="2-创建新的文章"><a href="#2-创建新的文章" class="headerlink" title="2.创建新的文章"></a>2.创建新的文章</h2><p>hexo new “文章标题”<br>执行完创建命令后会生成以下文件:</p>
+<p>source/_posts/文章标题.md</p>
+<p>之后只需要在这个markdown文件里面编写自己的博客文章就可以了</p>
+<h2 id="3-添加主题"><a href="#3-添加主题" class="headerlink" title="3.添加主题"></a>3.添加主题</h2><p>有很多人为hexo编写了很多漂亮的主题，可以自己去主题列表选择<br>安装的方法也很简单，这些主题都是托管在github上的，只要把它们克隆到项目文件夹的themes目录下面就可以了。当然还需要去__config.yml修改配置，选择使用哪个主题：</p>
+<p>theme: 主题名</p>
+<h2 id="4-启动服务器"><a href="#4-启动服务器" class="headerlink" title="4.启动服务器"></a>4.启动服务器</h2><p>编写完文章之后只需要运行下面命令就可以在浏览器地址栏输入 <a target="_blank" rel="noopener" href="http://0.0.0.0:4000/">http://0.0.0.0:4000</a> 查看自己的博客了</p>
+<p>hexo server</p>
+<h2 id="三、配置博客信息"><a href="#三、配置博客信息" class="headerlink" title="三、配置博客信息"></a>三、配置博客信息</h2><p>可以在项目根目录下的_config.yml文件配置博客的标题，作者，语言等相关信息</p>
+<h1 id="四、部署到Github"><a href="#四、部署到Github" class="headerlink" title="四、部署到Github"></a>四、部署到Github</h1><p>github提供了一个名叫Github Pages的服务，我们可以免费的用它来搭建自己的博客。<br>做法很简单，首先在github建立与你用户名对应的仓库，仓库名必须为 “你的github用户名.github.io”</p>
+<p>接着执行以下命令在本机安装hexo-deployer-git</p>
+<p>npm install hexo-deployer-git –save<br>然后在_config.yml文件，找到下面的内容</p>
+<p>Deployment<br>Docs: <a target="_blank" rel="noopener" href="http://hexo.io/docs/deployment.html">http://hexo.io/docs/deployment.html</a><br>deploy:<br>  type:<br>将它们修改为</p>
+<p> Deployment<br> Docs: <a target="_blank" rel="noopener" href="http://hexo.io/docs/deployment.html">http://hexo.io/docs/deployment.html</a><br>deploy:<br>  type: git<br>  repository: <a href="mailto:&#x67;&#105;&#116;&#64;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#x6d;">&#x67;&#105;&#116;&#64;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#111;&#x6d;</a>:你的github用户名/你的github用户名.github.io<br>  branch: master</p>
+<p>最后执行以下三条命令即可：</p>
+<p>hexo clean</p>
+<p>hexo generate</p>
+<p>hexo deploy</p>
+<p>（当然你必须为你的电脑添加github ssh key才能正常执行hexo deploy命令上传代码）</p>
+<h1 id="五、绑定域名"><a href="#五、绑定域名" class="headerlink" title="五、绑定域名"></a>五、绑定域名</h1><p>按照github pages的文档，是在github项目根目录下创建CNAME文件。但因为每次使用hexo更新博客再次上传，都会清除掉之前创建的CNAME文件。所以我们把CNAME放在source目录下（想上传的文件都放在该目录下）</p>
+<p>完整步骤如下:</p>
+<p>在source目录下添加一个CNAM文件，没有后缀名，里面内容为你的域名(如我的是:blog.islinjw.cn)。</p>
+<p>ping username.github.io记录下IP地址</p>
+<p>购买域名，配置域名解析username.github.io的ip地址</p>
 
                 
             </div>
@@ -583,11 +490,7 @@ a&#x3D;rtcp-fb :102 nack
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/webrtc/">
-                                    <span class="chip bg-color">webrtc</span>
-                                </a>
-                            
+                            <span class="chip bg-color">No tag</span>
                         </div>
                     
                 </div>
@@ -754,18 +657,17 @@ a&#x3D;rtcp-fb :102 nack
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;Current
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2023/04/01/Webrtc%E4%B9%8BSDP/">
+                <a href="/2021/10/04/%E7%AE%97%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="WebRTC之SDP">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="常用算法规整">
                         
-                        <span class="card-title">WebRTC之SDP</span>
+                        <span class="card-title">常用算法规整</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -775,27 +677,26 @@ a&#x3D;rtcp-fb :102 nack
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/webrtc/" class="post-category">
-                                    webrtc
+                            <a href="/categories/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/" class="post-category">
+                                    算法总结
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/webrtc/">
-                        <span class="chip bg-color">webrtc</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -809,13 +710,13 @@ a&#x3D;rtcp-fb :102 nack
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/30/%E5%90%AF%E5%8A%A8%E4%BC%98%E5%8C%96/">
+                <a href="/2021/08/01/MVVM%20%E4%B8%8EJetpack%E7%BB%93%E5%90%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="启动优化">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="MVVM与JetPacket结合">
                         
-                        <span class="card-title">启动优化</span>
+                        <span class="card-title">MVVM与JetPacket结合</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -826,14 +727,14 @@ a&#x3D;rtcp-fb :102 nack
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
-                                    性能优化
+                            <a href="/categories/%E6%9E%B6%E6%9E%84/" class="post-category">
+                                    架构
                                 </a>
                             
                             
@@ -843,8 +744,8 @@ a&#x3D;rtcp-fb :102 nack
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Android%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">Android开发</span>
+                    <a href="/tags/%E6%97%A5%E5%B8%B8%E7%A7%AF%E7%B4%AF/">
+                        <span class="chip bg-color">日常积累</span>
                     </a>
                     
                 </div>
